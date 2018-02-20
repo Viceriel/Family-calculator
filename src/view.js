@@ -1,9 +1,37 @@
 "use strict";
 
 let m = require("mithril");
+//let d3 = require("d3");
 
-let main = m("main", [
-    m("h1", "Family calculator"),
-    m("button", "Calculate")]);
+/*
+ * Class represents main view of page
+ */
+class Main
+{
+    constructor()
+    {
 
-module.exports = main;
+    }
+
+    /**
+     * Function for creating mithril vnode represents main view of page
+     *
+     * @return{Object} mithril vnode corresponding to primary view
+     */
+    view()
+    {
+        let main = m("main", [m("h1[id=title]","Family calculator"),m("button", "Calculate")]);
+        return main;
+    }
+}
+
+/*module.exports =
+{
+  view: ()=>
+        {
+          let main = m("main", [m("h1[id=title]","Family calculator"),m("button", "Calculate")]);
+          return main;
+        }
+}*/
+
+module.exports = Main;
