@@ -10,6 +10,7 @@ Node.js installed
 
 1. Clone github repository `git clone https://github.com/Viceriel/Family-calculator.git`
 1. Run `npm install` from node command line
+1. Run `npm install --only=dev`
 
 ## Start application
 
