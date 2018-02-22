@@ -13,7 +13,7 @@
     "d3"
   ],
   "author": "Ing. Jakub Kajan",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "d3": "^4.13.0",
     "mithril": "^1.1.6"
