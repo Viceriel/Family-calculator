@@ -1,6 +1,7 @@
 @transparent: rgba(54, 4, 84, .38);
 @container-color: white;
 @border-color:rgb(108, 247, 163);
+@footer-background: rgb(23, 55, 111);
 
 html
 {
@@ -8,6 +9,13 @@ html
     width: 100%;
 }
 
+footer
+{
+  color: @container-color;
+  background-color: @footer-background;
+  position: fixed;
+  bottom: 0;
+}
 .container
 {
   background-color: @transparent;
@@ -19,4 +27,19 @@ html
 {
   border-color: @border-color;
   color: @border-color;
+}
+
+.btn-outline-success:hover
+{
+  background-color: @border-color;
+}
+
+h3
+{
+  padding-top: 5px;
+}
+
+.lead
+{
+  padding-bottom: 10px;
 }
