@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "copy src\\app.html build",
+    "prebuild": "mkdirp build\\css && copy src\\app.html build",
     "build": "webpack && lessc src/less/custom.less build/css/custom.css",
     "postbuild": "webpack-dev-server",
     "lint": "eslint src/*.js"
@@ -22,6 +22,7 @@
   "devDependencies": {
     "eslint": "^4.18.1",
     "less": "^3.0.1",
+    "mkdirp": "^0.5.1",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"
   }
