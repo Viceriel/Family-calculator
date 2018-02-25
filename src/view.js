@@ -20,18 +20,9 @@ class Main
      */
     view()
     {
-        let main = m("main", [m("h1[id=title]","Family calculator"),m("button", "Calculate")]);
+        let main = m("main", [m("h1[id=title]","Family calculator"),m("button", "Calculate"), m("p", "Marcelka")]);
         return main;
     }
 }
-
-/*module.exports =
-{
-  view: ()=>
-        {
-          let main = m("main", [m("h1[id=title]","Family calculator"),m("button", "Calculate")]);
-          return main;
-        }
-}*/
 
 module.exports = Main;
