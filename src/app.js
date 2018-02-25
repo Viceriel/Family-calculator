@@ -2,7 +2,6 @@
 
 let m = require("mithril");
 let view = require("../src/view.js");
-//let d3 = require("d3");
 
 
 

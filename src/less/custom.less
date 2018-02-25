@@ -1,6 +1,22 @@
-@text-color: red;
+@transparent: rgba(54, 4, 84, .38);
+@container-color: white;
+@border-color:rgb(108, 247, 163);
 
-p
+html
 {
-  color: @text-color;
+    height: 100%;
+    width: 100%;
+}
+
+.container
+{
+  background-color: @transparent;
+  color: @container-color;
+  max-width: 1200px;
+}
+
+.btn-outline-success
+{
+  border-color: @border-color;
+  color: @border-color;
 }
