@@ -1,24 +1,30 @@
 "use strict";
 
-let m = require("mithril");
-
 /**
  * Mithril components serves as add item window
  */
 class AddView
 {
-  constructor(name)
+  constructor(parent, m)
   {
-    this._name = name;
+    this._parent = parent;
+    this._m = m;
   }
 
-  oncreate()
+  onbeforeremove(vnode)
   {
-    alert(this._name);
+      vnode.dom.classList.add("exit");
+      return new Promise((resolve)=>
+      {
+          setTimeout(resolve, 250);
+      });
   }
+
   view()
   {
-    let main = m("main", {class: "container"}, m("h3","Add income:"));
+    let m = this._m;
+    let main = m("main", {class: "begin container"}, [m("h3","Add income:"),
+                                                       m("input[type=text]", "Name")]);
     return main;
   }
 }

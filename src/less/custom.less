@@ -27,11 +27,10 @@ footer
 {
   border-color: @border-color;
   color: @border-color;
-}
-
-.btn-outline-success:hover
-{
-  background-color: @border-color;
+  &:hover
+  {
+    background-color: @border-color;
+  }
 }
 
 h3
@@ -42,4 +41,26 @@ h3
 .lead
 {
   padding-bottom: 10px;
+}
+
+.exit {animation:fade-out 0.25s;}
+@keyframes fade-out {
+    from {opacity:1;}
+    to {opacity:0;}
+}
+
+.begin {animation:fade-in 3s;}
+@keyframes fade-in
+{
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@input-background: rgba(70, 66, 58, 0);
+input
+{
+  background-color: @input-background;
+  border-color: @border-color;
+  color: @container-color;
+  border-radius: 5px;
 }
