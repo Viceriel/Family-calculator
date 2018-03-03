@@ -23,8 +23,10 @@ class AddView
   view()
   {
     let m = this._m;
-    let main = m("main", {class: "begin container"}, [m("h3","Add income:"),
-                                                       m("input[type=text]", "Name")]);
+    let main = [m("main", {class: "begin container"}, [m("h3","Add income:"),
+                                                       m("input[type=text]", "Name")]),
+                                                       m("footer", {class: "container-fluid text-center"}, [m("h3","Nič sa nezdá byť drahé na úver"),
+                                                                                                            m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")])];
     return main;
   }
 }
