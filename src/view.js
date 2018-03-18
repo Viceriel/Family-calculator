@@ -7,9 +7,19 @@ let m = require("mithril");
  */
 class Main
 {
-    constructor()
+    constructor(parent, request)
     {
-
+      this._parent = parent;
+      this._spents = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Spents"),
+                                                                             m("button[name=spent]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)},"Add spent")]);
+      if (request && request.length !=0)
+      {
+       let len = request.length;
+       for (let i = 0; i < len; i++)
+       {
+         this._spents.children.push(m("p", {class: "lead"}, request[i]._name));
+       }
+      }
     }
 
     onbeforeremove(vnode)
@@ -33,8 +43,7 @@ class Main
                                                                                              m("input[type=text]")]),
                                                     m("div", {class: "row text-center"}, [m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Income"),
                                                                                                                                                   m("button", {class: "btn btn-outline-success btn-custom-green"}, "Add income")]),
-                                                                                          m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Spents"),
-                                                                                                                                                  m("a[href=/add]", {oncreate: m.route.link}, m("button", {class: "btn btn-outline-success btn-custom-green"},"Add spent"))]),
+                                                                                          this._spents,
                                                                                           m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Investments"),
                                                                                                                                                   m("button", {class: "btn btn-outline-success btn-custom-green"}, "Add investment")])])]),
                     m("footer", {class: "container-fluid text-center"}, [m("h3","Nič sa nezdá byť drahé na úver"),

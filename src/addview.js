@@ -15,12 +15,12 @@ class AddView
     this._parent = parent;
     this._m = m;
     this._button_next = this._m("button", {class: "btn btn-outline-success btn-custom-green", onclick: this.removeBtn.bind(this)}, "Next");
-    this._button_confirm = this._m("button", {class: "btn btn-outline-success btn-custom-yellow", onclick: this._parent.switch.bind(this._parent)}, "Confirm");
-    this._row = this._m("div", {class: "row text-center"}, [this._m("input[type=text],[placeholder=Name of spent]"),
-                                                            this._m("input[type=text],[placeholder=Value of spents]"),
-                                                            this._m("select", [m("option", "Year"),
+    this._button_confirm = this._m("button[name=main]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this.processItems.bind(this)}, "Confirm");
+    this._row = this._m("div", {class: "row text-center"}, [this._m("input[type=text],[placeholder=Name of spent],[name=name]"),
+                                                            this._m("input[type=text],[placeholder=Value of spents], [name=value]"),
+                                                            this._m("select[name=frequency]", [m("option", "Year"),
                                                                                m("option", "Month")]),
-                                                            this._m("input[type=text],[placeholder=Modifier]"),
+                                                            this._m("input[type=text],[placeholder=Modifier], [name=modifier]"),
                                                             this._button_next]);
   }
 
@@ -51,6 +51,27 @@ class AddView
       {
           setTimeout(resolve, 250);
       });
+  }
+
+  processItems(e)
+  {
+    let names = document.getElementsByName("name");
+    let values = document.getElementsByName("value");
+    let frequency = document.getElementsByName("frequency");
+    let modifiers = document.getElementsByName("modifier");
+    let request = [];
+    let FinanceItem = require("../src/FinanceItem.js")
+
+    let len = names.length;
+    for (let i = 0; i < len; i++)
+    {
+      request.push(new FinanceItem(names[i].value, values[i].value, frequency[i].value, modifiers[i].value));
+      if (!request[i]._valid)
+        return;
+    }
+
+    e.request = request;
+    this._parent.changeView(e);
   }
 
   /**
