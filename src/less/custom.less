@@ -38,14 +38,32 @@ footer
   max-width: 1200px;
 }
 
-.btn-outline-success
+.btn-mixin(@color)
 {
-  border-color: @border-color;
-  color: @border-color;
+  border-color: @color;
+  color: @color;
   &:hover
   {
-    background-color: @border-color;
+    background-color: @color;
+    border-color: @color;
   }
+
+  &:active
+  {
+    background-color: @color;
+    border-color: @color;
+  }
+}
+
+.btn-custom-green
+{
+  .btn-mixin(@border-color);
+}
+
+@yellow-color: rgb(81, 94, 0);
+.btn-custom-yellow
+{
+  .btn-mixin(@yellow-color);
 }
 
 h3

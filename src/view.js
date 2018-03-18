@@ -32,11 +32,11 @@ class Main
                                                     m("div", {class: "col-12 text-center"}, [m("h4[id=savings]", "Savings:"),
                                                                                              m("input[type=text]")]),
                                                     m("div", {class: "row text-center"}, [m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Income"),
-                                                                                                                                                  m("button", {class: "btn btn-outline-success"}, "Add income")]),
+                                                                                                                                                  m("button", {class: "btn btn-outline-success btn-custom-green"}, "Add income")]),
                                                                                           m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Spents"),
-                                                                                                                                                  m("a[href=/add]", {oncreate: m.route.link}, m("button", {class: "btn btn-outline-success"},"Add spent"))]),
+                                                                                                                                                  m("a[href=/add]", {oncreate: m.route.link}, m("button", {class: "btn btn-outline-success btn-custom-green"},"Add spent"))]),
                                                                                           m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Investments"),
-                                                                                                                                                  m("button", {class: "btn btn-outline-success"}, "Add investment")])])]),
+                                                                                                                                                  m("button", {class: "btn btn-outline-success btn-custom-green"}, "Add investment")])])]),
                     m("footer", {class: "container-fluid text-center"}, [m("h3","Nič sa nezdá byť drahé na úver"),
                                                                                  m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")])];
         return main;

@@ -1,7 +1,13 @@
 "use strict";
 
+/**
+ * Main class represents application
+ */
 class App
 {
+  /**
+   * Assigne the  views.
+   */
   constructor()
   {
     let mainview = require("../src/view.js");
@@ -12,6 +18,9 @@ class App
     this._add = new addview(this, this._m);
   }
 
+  /**
+   * Routing of single page application.
+   */
   run()
   {
     this._m.route(document.body, "/home",
@@ -19,6 +28,11 @@ class App
                                       "/home": this._main,
                                       "/add": this._add,
                                     });
+  }
+
+  switch()
+  {
+    this._m.mount(document.body, this._main);
   }
 }
 
