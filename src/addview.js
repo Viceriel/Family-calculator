@@ -7,13 +7,16 @@ class AddView
 {
   /**
    * Assigne parent and mithril. Create layout components.
-   * @param{App} parent parent class
-   * @param{Mithril} m Mithril class
+   * @param {App} parent parent class
+   * @param {Mithril} m Mithril class
+   * @param {String} look view organisation
    */
-  constructor(parent, m)
+  constructor(parent, m, look)
   {
     this._parent = parent;
+    this._look = look;
     this._m = m;
+    this._title = this._m("h3", "Add " + look);
     this._button_next = this._m("button", {class: "btn btn-outline-success btn-custom-green", onclick: this.removeBtn.bind(this)}, "Next");
     this._button_confirm = this._m("button[name=main]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this.processItems.bind(this)}, "Confirm");
     this._row = this._m("div", {class: "row text-center"}, [this._m("input[type=text],[placeholder=Name of spent],[name=name]"),
@@ -42,7 +45,7 @@ class AddView
   /**
    * Function called by Mithril before component removal. Responsible for remove animation.
    *
-   * @param{vnode} vnode
+   * @param {vnode} vnode
    */
   onbeforeremove(vnode)
   {
@@ -53,6 +56,11 @@ class AddView
       });
   }
 
+  /**
+   * Event handler for confirm button onclick
+   *
+   * @param {Object} e Event Object
+   */
   processItems(e)
   {
     let names = document.getElementsByName("name");
@@ -70,19 +78,21 @@ class AddView
         return;
     }
 
-    e.request = request;
+    e.request = {};
+    e.request.data = request;
+    e.request.type = this._look;
     this._parent.changeView(e);
   }
 
   /**
    * Function representing the component. Addview layout
    *
-   * @return{Array}
+   * @return {Array}
    */
   view()
   {
     let m = this._m;
-    let main = [m("main", {class: "begin container"}, [m("h3","Add income:"),
+    let main = [m("main", {class: "begin container"}, [this._title,
                                                        m("div", this._row),
                                                        this._button_confirm]),
                                                        m("footer", {class: "container-fluid text-center"}, [m("h3","Nič sa nezdá byť drahé na úver"),
