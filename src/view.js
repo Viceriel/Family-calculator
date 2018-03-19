@@ -21,11 +21,11 @@ class Main
       this._income = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Income"),
                                                                              m("button[name=income]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)}, "Add income")]);
       this._investment = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Investments"),
-                                                                                 m("button", {class: "btn btn-outline-success btn-custom-green"}, "Add investment")]);
+                                                                                 m("button[name=investment]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)}, "Add investment")]);
       if (request && request.length !=0)
       {
-       let types = ["_spents", "_income"];
-       let types1 = ["spent", "income"];
+       let types = ["_spents", "_income", "_investment"];
+       let types1 = ["spent", "income", "investment"];
        let len1 = types.length;
        for (let j = 0; j < len1; j++)
        {
@@ -55,7 +55,7 @@ class Main
     /**
      * Function for creating mithril vnode represents main view of page
      *
-     * @return {Object} mithril vnode corresponding to primary view
+     * @return {Array} mithril vnodes corresponding to primary view
      */
     view()
     {

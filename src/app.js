@@ -11,13 +11,13 @@ class App
   constructor()
   {
     let mainview = require("../src/view.js");
-    let addview =  require("../src/addview");
 
     this._m = require("mithril");
     this._main = new mainview(this);
     this._items = {};
     this._items["spent"] = [];
     this._items["income"] = [];
+    this._items["investment"] = [];
   }
 
   /**
@@ -36,8 +36,9 @@ class App
   changeView(e)
   {
     let mainview = require("../src/view.js");
-    let addview =  require("../src/addview");
-    let add;
+    let addview =  require("../src/addview.js");
+    let investview = require("../src/InvestView.js");
+    let add, main, invest;
 
     switch(e.target.name)
     {
@@ -49,12 +50,16 @@ class App
         if (e.request)
           this.mapToItems(e.request.data, e.request.type);
 
-        let main = new mainview(this, this._items);
+        main = new mainview(this, this._items);
         this._m.mount(document.body, main);
         break;
       case "income":
         add = new addview(this, this._m, "income");
         this._m.mount(document.body, add);
+        break;
+      case "investment":
+        invest = new investview(this, this._m);
+        this._m.mount(document.body, invest);
         break;
       default:
         break;
