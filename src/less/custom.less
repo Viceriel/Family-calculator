@@ -113,3 +113,24 @@ select
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+@special-yellow: rgba(81, 94, 0, 0.5);
+.items:hover
+{
+  background-color: @special-yellow;
+}
+
+.invalid
+{
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 3px;
+  border-color: rgb(79, 6, 6);
+  margin-bottom: 5px;
+}
+
+.invalid .row
+{
+  padding-left: 0px;
+  margin-left: 0px;
+}

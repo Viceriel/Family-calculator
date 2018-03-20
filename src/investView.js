@@ -58,11 +58,15 @@ class InvestView extends add
     let InvestItem = require("../src/investItem.js");
 
     let len = names.length;
+    this.removeInvalid(names, len);
     for (let i = 0; i < len; i++)
     {
       request.push(new InvestItem(names[i].value, values[i].value, frequency[i].value, modifiers[i].value, capitals[i].value, increases[i].value));
       if (!request[i]._valid)
+      {
+        this.invalidDataMark(names[i]);
         return;
+      }
     }
 
     e.request = {};

@@ -19,8 +19,8 @@ class AddView
     this._title = this._m("h3", "Add " + look);
     this._button_next = this._m("button", {class: "btn btn-outline-success btn-custom-green", onclick: this.removeBtn.bind(this)}, "Next");
     this._button_confirm = this._m("button[name=main]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this.processItems.bind(this)}, "Confirm");
-    this._row = this._m("div", {class: "row text-center"}, [this._m("input[type=text],[placeholder=Name of spent],[name=name]"),
-                                                            this._m("input[type=text],[placeholder=Value of spents], [name=value]"),
+    this._row = this._m("div", {class: "row text-center"}, [this._m("input[type=text],[placeholder=Name of "+ this._look+"],[name=name]"),
+                                                            this._m("input[type=text],[placeholder=Value of "+ this._look+"], [name=value]"),
                                                             this._m("select[name=frequency]", [m("option", "Year"),
                                                                                m("option", "Month")]),
                                                             this._m("input[type=text],[placeholder=Modifier], [name=modifier]"),
@@ -57,6 +57,19 @@ class AddView
   }
 
   /**
+   * Method responsiblo for marking user input with invalid data
+   *
+   * @param {Element} element element from group with invalid data
+   */
+  invalidDataMark(element)
+  {
+    alert("Please correct data provided at marked input");
+    let parent = element.parentNode.parentNode;
+    if (!parent.classList.contains("invalid"))
+      parent.classList.add("invalid");
+  }
+
+  /**
    * Event handler for confirm button onclick
    *
    * @param {Object} e Event Object
@@ -71,11 +84,15 @@ class AddView
     let FinanceItem = require("../src/FinanceItem.js");
 
     let len = names.length;
+    this.removeInvalid(names, len);
     for (let i = 0; i < len; i++)
     {
       request.push(new FinanceItem(names[i].value, values[i].value, frequency[i].value, modifiers[i].value));
       if (!request[i]._valid)
+      {
+        this.invalidDataMark(names[i]);
         return;
+      }
     }
 
     e.request = {};
@@ -83,6 +100,21 @@ class AddView
     e.request.type = this._look;
     this._parent.changeView(e);
   }
+
+  /**
+   * Method responsible for removing invalid mark after confirm button
+   *
+   * @param {Array} divs array of input elements
+   * @param {Number} len div array length
+   */
+   removeInvalid(names, len)
+   {
+     for (let i = 0; i < len; i++)
+     {
+       if (names[i].parentNode.parentNode.classList.contains("invalid"))
+         names[i].parentNode.parentNode.classList.remove("invalid");
+     }
+   }
 
   /**
    * Function representing the component. Addview layout

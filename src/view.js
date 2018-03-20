@@ -16,8 +16,8 @@ class Main
     constructor(parent, request)
     {
       this._parent = parent;
-      this._spents = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Spents"),
-                                                                             m("button[name=spent]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)},"Add spent")]);
+      this._spents = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Spends"),
+                                                                             m("button[name=spend]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)},"Add spend")]);
       this._income = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Income"),
                                                                              m("button[name=income]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)}, "Add income")]);
       this._investment = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Investments"),
@@ -25,14 +25,14 @@ class Main
       if (request && request.length !=0)
       {
        let types = ["_spents", "_income", "_investment"];
-       let types1 = ["spent", "income", "investment"];
+       let types1 = ["spend", "income", "investment"];
        let len1 = types.length;
        for (let j = 0; j < len1; j++)
        {
          let len = request[types1[j]].length;
          for (let i = 0; i < len; i++)
          {
-           this[types[j]].children.push(m("p", {class: "lead"}, request[types1[j]][i]._name));
+           this[types[j]].children.push(m("p", {class: "lead items"}, request[types1[j]][i]._name));
          }
        }
       }

@@ -15,7 +15,7 @@ class App
     this._m = require("mithril");
     this._main = new mainview(this);
     this._items = {};
-    this._items["spent"] = [];
+    this._items["spend"] = [];
     this._items["income"] = [];
     this._items["investment"] = [];
   }
@@ -42,8 +42,8 @@ class App
 
     switch(e.target.name)
     {
-      case "spent":
-        add = new addview(this, this._m, "spent");
+      case "spend":
+        add = new addview(this, this._m, "spend");
         this._m.mount(document.body, add);
         break;
       case "main":
