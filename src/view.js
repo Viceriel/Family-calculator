@@ -32,7 +32,7 @@ class Main
          let len = request[types1[j]].length;
          for (let i = 0; i < len; i++)
          {
-           this[types[j]].children.push(m("p", {class: "lead items"}, request[types1[j]][i]._name));
+           this[types[j]].children.push(m("p", {class: "lead items", onclick: this._parent.processChange.bind(this._parent)}, request[types1[j]][i]._name));
          }
        }
       }

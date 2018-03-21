@@ -18,6 +18,11 @@ class App
     this._items["spend"] = [];
     this._items["income"] = [];
     this._items["investment"] = [];
+
+    this._map = new Map();
+    this._map.set("Income", "income");
+    this._map.set("Spends", "spend");
+    this._map.set("Investments", "investment");
   }
 
   /**
@@ -26,6 +31,33 @@ class App
   run()
   {
     this._m.mount(document.body, this._main);
+  }
+
+  /**
+   * Method responsible for processing change item request
+   *
+   * @param {Object} e event object
+   */
+  processChange(e)
+  {
+     let first = false;
+     let children = e.target.parentNode.childNodes;
+     let index = 0;
+
+     let len = children.length;
+     for (let i = 2; i < len; i++)
+     {
+       if (e.target == children[i])
+       {
+         index = i - 2;
+         break;
+       }
+     }
+
+     e.target.name = "change";
+     e.target.itemLocation = index;
+     e.target.itemName = this._map.get(children[0].innerHTML);
+     this.changeView(e);
   }
 
   /**
@@ -38,7 +70,8 @@ class App
     let mainview = require("../src/view.js");
     let addview =  require("../src/addview.js");
     let investview = require("../src/InvestView.js");
-    let add, main, invest;
+    let changeview = require("../src/changeView.js");
+    let add, main, invest, change;
 
     switch(e.target.name)
     {
@@ -60,6 +93,10 @@ class App
       case "investment":
         invest = new investview(this, this._m);
         this._m.mount(document.body, invest);
+        break;
+      case "change":
+        change = new changeview(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
+        this._m.mount(document.body, change);
         break;
       default:
         break;
