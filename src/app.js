@@ -34,33 +34,6 @@ class App
   }
 
   /**
-   * Method responsible for processing change item request
-   *
-   * @param {Object} e event object
-   */
-  processChange(e)
-  {
-     let first = false;
-     let children = e.target.parentNode.childNodes;
-     let index = 0;
-
-     let len = children.length;
-     for (let i = 2; i < len; i++)
-     {
-       if (e.target == children[i])
-       {
-         index = i - 2;
-         break;
-       }
-     }
-
-     e.target.name = "change";
-     e.target.itemLocation = index;
-     e.target.itemName = this._map.get(children[0].innerHTML);
-     this.changeView(e);
-  }
-
-  /**
    * Method responsible for changing view base on caller
    *
    * @param {Object} e event object
@@ -71,36 +44,37 @@ class App
     let addview =  require("../src/addview.js");
     let investview = require("../src/InvestView.js");
     let changeview = require("../src/changeView.js");
-    let add, main, invest, change;
+    let changeinvest = require("../src/changeInvestView.js");
+    let view;
 
     switch(e.target.name)
     {
       case "spend":
-        add = new addview(this, this._m, "spend");
-        this._m.mount(document.body, add);
+        view = new addview(this, this._m, "spend");
         break;
       case "main":
         if (e.request)
           this.mapToItems(e.request.data, e.request.type);
 
-        main = new mainview(this, this._items);
-        this._m.mount(document.body, main);
+        view = new mainview(this, this._items);
         break;
       case "income":
-        add = new addview(this, this._m, "income");
-        this._m.mount(document.body, add);
+        view = new addview(this, this._m, "income");
         break;
       case "investment":
-        invest = new investview(this, this._m);
-        this._m.mount(document.body, invest);
+        view = new investview(this, this._m);
         break;
       case "change":
-        change = new changeview(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
-        this._m.mount(document.body, change);
+        view = new changeview(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
+        break;
+      case "changeinvest":
+        view = new changeinvest(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
         break;
       default:
-        break;
+        return;
     }
+
+    this._m.mount(document.body, view);
   }
 
   /**

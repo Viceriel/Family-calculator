@@ -32,7 +32,7 @@ class Main
          let len = request[types1[j]].length;
          for (let i = 0; i < len; i++)
          {
-           this[types[j]].children.push(m("p", {class: "lead items", onclick: this._parent.processChange.bind(this._parent)}, request[types1[j]][i]._name));
+           this[types[j]].children.push(m("p", {class: "lead items", onclick: this.processChange.bind(this)}, request[types1[j]][i]._name));
          }
        }
       }
@@ -50,6 +50,36 @@ class Main
         {
             setTimeout(resolve, 250);
         });
+    }
+
+    /**
+     * Method responsible for processing change item request
+     *
+     * @param {Object} e event object
+     */
+    processChange(e)
+    {
+       let first = false;
+       let children = e.target.parentNode.childNodes;
+       let index = 0;
+
+       let len = children.length;
+       for (let i = 2; i < len; i++)
+       {
+         if (e.target == children[i])
+         {
+            index = i - 2;
+            break;
+         }
+       }
+
+       e.target.name = "change";
+       e.target.itemLocation = index;
+       e.target.itemName = this._parent._map.get(children[0].innerHTML);
+       if (e.target.itemName == "investment")
+           e.target.name += "invest";
+           
+       this._parent.changeView(e);
     }
 
     /**

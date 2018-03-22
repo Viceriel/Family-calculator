@@ -10,7 +10,7 @@ class FinanceItem
    *
    * @param {String} name name of financial operation
    * @param {Number} value value of financial operation
-   * @param {Number} frequency financial operation frequency value
+   * @param {String} frequency financial operation frequency value
    * @param {Number} modifier modifier of finance operation frequency
    */
   constructor(name, value, frequency, modifier)
