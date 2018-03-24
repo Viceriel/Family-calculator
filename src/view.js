@@ -22,6 +22,9 @@ class Main
                                                                              m("button[name=income]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)}, "Add income")]);
       this._investment = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Investments"),
                                                                                  m("button[name=investment]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)}, "Add investment")]);
+      this._noise = m("div", {class: "row text-right lead"}, m("div", {class: "col-11"}, m("label", ["Noise:",
+                                                                                                m("span[id=noise]", {class: "fa fa-cog", onclick: this.noiseProcess.bind(this)})])));
+
       if (request && request.length !=0)
       {
        let types = ["_spents", "_income", "_investment"];
@@ -59,7 +62,6 @@ class Main
      */
     processChange(e)
     {
-       let first = false;
        let children = e.target.parentNode.childNodes;
        let index = 0;
 
@@ -78,8 +80,19 @@ class Main
        e.target.itemName = this._parent._map.get(children[0].innerHTML);
        if (e.target.itemName == "investment")
            e.target.name += "invest";
-           
+
        this._parent.changeView(e);
+    }
+
+    /**
+     * Process the request from noise span
+     *
+     * @param {Object} e event object
+     */
+    noiseProcess(e)
+    {
+        e.target.name = e.target.id;
+        this._parent.changeView(e);
     }
 
     /**
@@ -94,7 +107,8 @@ class Main
                                                                                              m("input[type=text]")]),
                                                     m("div", {class: "row text-center"}, [this._income,
                                                                                           this._spents,
-                                                                                          this._investment])]),
+                                                                                          this._investment]),
+                                                    this._noise]),
                     m("footer", {class: "container-fluid text-center"}, [m("h3","Nič sa nezdá byť drahé na úver"),
                                                                                  m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")])];
         return main;

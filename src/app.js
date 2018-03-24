@@ -70,6 +70,8 @@ class App
       case "changeinvest":
         view = new changeinvest(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
         break;
+      case "noise":
+        return;
       default:
         return;
     }

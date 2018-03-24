@@ -26,7 +26,7 @@
        {
          this._capital = capital;
          this._increase = increase;
-         return
+         return;
        }
 
        this._valid = false;
