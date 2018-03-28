@@ -46,14 +46,14 @@ class Main
      *
      * @param {vnode} vnode Tree of component's virtual nodes
      */
-    onbeforeremove(vnode)
+    /*onbeforeremove(vnode)
     {
         vnode.dom.classList.add("exit");
         return new Promise((resolve)=>
         {
             setTimeout(resolve, 250);
         });
-    }
+    }*/
 
     /**
      * Method responsible for processing change item request

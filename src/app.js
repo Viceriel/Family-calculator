@@ -45,35 +45,37 @@ class App
     let investview = require("../src/InvestView.js");
     let changeview = require("../src/changeView.js");
     let changeinvest = require("../src/changeInvestView.js");
+    let noiseview = require("../src/noiseview.js")
     let view;
 
     switch(e.target.name)
     {
-      case "spend":
-        view = new addview(this, this._m, "spend");
-        break;
-      case "main":
-        if (e.request)
-          this.mapToItems(e.request.data, e.request.type);
+        case "spend":
+            view = new addview(this, this._m, "spend");
+            break;
+        case "main":
+            if (e.request)
+                this.mapToItems(e.request.data, e.request.type);
 
-        view = new mainview(this, this._items);
-        break;
-      case "income":
-        view = new addview(this, this._m, "income");
-        break;
-      case "investment":
-        view = new investview(this, this._m);
-        break;
-      case "change":
-        view = new changeview(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
-        break;
-      case "changeinvest":
-        view = new changeinvest(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
-        break;
-      case "noise":
-        return;
-      default:
-        return;
+            view = new mainview(this, this._items);
+            break;
+        case "income":
+            view = new addview(this, this._m, "income");
+            break;
+        case "investment":
+            view = new investview(this, this._m);
+            break;
+        case "change":
+            view = new changeview(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
+            break;
+        case "changeinvest":
+            view = new changeinvest(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
+            break;
+        case "noise":
+            view = new noiseview(this, this._m, this._items["income"]);
+            break;
+        default:
+            return;
     }
 
     this._m.mount(document.body, view);
