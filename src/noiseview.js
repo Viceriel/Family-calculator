@@ -28,6 +28,10 @@ class NoiseView
 
         this._lower = parseInt(month_income / 50, 10);
         this._higher = parseInt(month_income / 20, 10);
+
+        this._lower = 10;
+        this._higher = 50;
+        this._samples = 6000000;
     }
 
     /**
@@ -44,10 +48,40 @@ class NoiseView
         });
     }
 
+    createDataset()
+    {
+        let d3 = require("d3");
+        let size = (this._higher - this._lower);
+        let mean = Math.round((size / 2)) - (-1 * this._lower);
+        let normal = d3.randomNormal(Math.round(mean), Math.round((size / 100) * 20));
+        let dataset = [];
+
+        for (let i = this._lower; i <= this._higher; i++)
+        {
+          let index = i + (-1 * this._lower);
+          dataset[index] = [];
+          dataset[index][0] = i;
+          dataset[index][1] = 0;
+        }
+
+        for (let i = 0; i < this._samples; i++)
+        {
+          let index = Math.round(normal());
+          if (index >= this._lower && index < (this._higher + 1))
+          {
+            index += (-1 * this._lower);
+            dataset[index][1] += 1;
+          }
+        }
+
+        return [dataset, Math.round((size / 2))];
+    }
+
     oncreate(vnode)
     {
       let d3 = require("d3");
       let mi = document.getElementsByTagName("main")[0];
+      let [dat, max] = this.createDataset();
 
       if (mi.offsetWidth < 1200)
       {
@@ -56,12 +90,13 @@ class NoiseView
       }
 
       let width = 800;
-      let height = 400;
+      let height = 420;
       let x = d3.scaleLinear()
-                .range([20, width])
-                .domain([0, 50]);
+                .range([25, width - 15])
+                .domain([this._lower, this._higher]);
       let y = d3.scaleLinear()
-                .range([height - 20, 20]);
+                .range([height - 20, 20])
+                .domain([0, dat[max][1]/this._samples]);
 
       d3.select("main")
         .append("svg");
@@ -91,13 +126,23 @@ class NoiseView
                                .tickSize(-width));
 
       svg.append("g")
-         .attr("transform", "translate(60," + 0 + ")")
+         .attr("transform", "translate(25, 0)")
          .call(d3.axisLeft(y));
 
-      let pos = height - 40;
+      let pos = height - 20;
       svg.append("g")
-         .attr("transform", "translate(-10," + pos + ")")
+         .attr("transform", "translate(0," + pos + ")")
          .call(d3.axisBottom(x));
+
+      let line = d3.line()
+                       .x((d)=>{return x(d[0]);})
+                       .y((d)=>{return y(d[1] / this._samples);});
+
+      //let dat = [[0, 0], [50, 100]];
+      svg.append("path")
+         .data([dat])
+         .attr("class", "line")
+         .attr("d", line);
     }
 
     view()
