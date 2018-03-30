@@ -55,10 +55,10 @@ class changeView extends add
       return;
     }
 
-    this._item._name = names[0].value;
-    this._item.value = values[0].value;
-    this._item._frequency = frequency[0].value;
-    this._item._modifier = modifiers[0].value;
+    this._item.Name = names[0].value;
+    this._item.Value = values[0].value;
+    this._item.Frequency = frequency[0].value;
+    this._item.Modifier = modifiers[0].value;
 
     this._parent.changeView(e);
   }

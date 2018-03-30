@@ -14,6 +14,7 @@ class AddView
   constructor(parent, m, look)
   {
     this._parent = parent;
+    this._valid = true;
     this._look = look;
     this._m = m;
     this._title = this._m("h3", "Add " + look);

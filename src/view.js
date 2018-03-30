@@ -16,6 +16,7 @@ class Main
     constructor(parent, request)
     {
       this._parent = parent;
+      this._valid = true;
       this._spents = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Spends"),
                                                                              m("button[name=spend]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)},"Add spend")]);
       this._income = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Income"),
@@ -46,14 +47,14 @@ class Main
      *
      * @param {vnode} vnode Tree of component's virtual nodes
      */
-    /*onbeforeremove(vnode)
+    onbeforeremove(vnode)
     {
         vnode.dom.classList.add("exit");
         return new Promise((resolve)=>
         {
-            setTimeout(resolve, 250);
+            setTimeout(resolve, 300);
         });
-    }*/
+    }
 
     /**
      * Method responsible for processing change item request
@@ -92,6 +93,8 @@ class Main
     noiseProcess(e)
     {
         e.target.name = e.target.id;
+        let main = document.getElementsByTagName("main")[0];
+        e.mainsize = main.offsetWidth;
         this._parent.changeView(e);
     }
 

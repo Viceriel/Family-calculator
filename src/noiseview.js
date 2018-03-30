@@ -11,8 +11,9 @@ class NoiseView
      * @param {App} parent app class
      * @param {Mithril} m mmithril object
      * @param {Array} income array with income items
+     * @param {Number} size size of main container
      */
-    constructor(parent, m, income)
+    constructor(parent, m, income, size)
     {
         this._parent = parent;
         this._m = m;
@@ -22,16 +23,38 @@ class NoiseView
         let len = income.length;
         for (let i = 0; i < len; i++)
         {
-          if (income[i]._frequency == "Month")
-              month_income += income[i].value;
+          if (income[i].Frequency == "Month")
+              month_income += income[i].Value;
         }
 
-        this._lower = parseInt(month_income / 50, 10);
+        this._lower = parseInt(-month_income / 50, 10);
         this._higher = parseInt(month_income / 20, 10);
 
-        this._lower = 10;
-        this._higher = 50;
+        if (month_income <=  0)
+        {
+            alert("Your month income is "+ month_income+" which is inappropriate");
+            this._valid = false;
+            return;
+        }
+        else if (size < 1200)
+        {
+            alert("No resolution, no graph!");
+            this._valid = false;
+            return;
+        }
+        else if (!this.spreadCheck())
+        {
+            alert("Spread between low and high border value based on your monthly income is low! Please find a better job!");
+            this._valid = false;
+            return;
+        }
+
+        this._valid = true;
+        this._svg = m("svg");
         this._samples = 6000000;
+        this._row = m("div", {class: "row text-center"}, [m("input[placeholder=Low border],[value="+parseInt(this._lower)+"]"),
+                                                            m("input[placeholder=High border],[value="+parseInt(this._higher)+"]"),
+                                                            m("button", {class: "btn btn-outline-success btn-custom-green", onclick: this.recalculate.bind(this)}, "Calculate")]);
     }
 
     /**
@@ -48,6 +71,11 @@ class NoiseView
         });
     }
 
+    /**
+     * Method responsible for creating histogram from range low to high
+     *
+     * @return {Array} created dataset
+     */
     createDataset()
     {
         let d3 = require("d3");
@@ -77,17 +105,16 @@ class NoiseView
         return [dataset, Math.round((size / 2))];
     }
 
+    /**
+     * Manipulating with svg, creating grid, axis and painting dataset
+     *
+     * @param {Object} vnode virtual node
+     */
     oncreate(vnode)
     {
       let d3 = require("d3");
       let mi = document.getElementsByTagName("main")[0];
       let [dat, max] = this.createDataset();
-
-      if (mi.offsetWidth < 1200)
-      {
-          alert("Sorry, no resolution, no graph.");
-          return;
-      }
 
       let width = 800;
       let height = 420;
@@ -97,9 +124,6 @@ class NoiseView
       let y = d3.scaleLinear()
                 .range([height - 20, 20])
                 .domain([0, dat[max][1]/this._samples]);
-
-      d3.select("main")
-        .append("svg");
 
       function make_x_gridlines()
       {
@@ -138,17 +162,43 @@ class NoiseView
                        .x((d)=>{return x(d[0]);})
                        .y((d)=>{return y(d[1] / this._samples);});
 
-      //let dat = [[0, 0], [50, 100]];
       svg.append("path")
          .data([dat])
          .attr("class", "line")
          .attr("d", line);
     }
 
+    spreadCheck()
+    {
+      if (this._higher - this._lower > 20)
+          return true;
+
+      return false;
+    }
+
+    recalculate()
+    {
+      let data = document.getElementsByTagName("input");
+      this._lower = parseFloat(data[0].value);
+      this._higher = parseFloat(data[1].value);
+
+      if (this._higher - this._lower > 20)
+      {
+          let d3 = require("d3");
+          d3.select("svg").selectAll("*").remove();
+          this.oncreate();
+      }
+      else
+        alert("Spread of numbers provided by your border values selection is too low!");
+
+    }
+
     view()
     {
 
-      let main = [this._m("main", {class: "container begin"}, this._title),
+      let main = [this._m("main", {class: "container begin"}, [this._title,
+                                                              this._svg,
+                                                              this._row]),
                                                               this._m("footer", {class: "container-fluid text-center"}, [this._m("h3","Nič sa nezdá byť drahé na úver"),
                                                                                                                          this._m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")])];
       return main;

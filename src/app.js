@@ -72,13 +72,14 @@ class App
             view = new changeinvest(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
             break;
         case "noise":
-            view = new noiseview(this, this._m, this._items["income"]);
+            view = new noiseview(this, this._m, this._items["income"], e.mainsize);
             break;
         default:
             return;
     }
 
-    this._m.mount(document.body, view);
+    if (view._valid)
+        this._m.mount(document.body, view);
   }
 
   /**

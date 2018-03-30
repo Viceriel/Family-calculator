@@ -18,14 +18,54 @@ class FinanceItem
       if(name && value && frequency && modifier)
       {
         this._name = name;
-        this._value = value;
+        this._value = parseFloat(value);
         this._frequency = frequency;
-        this._modifier = modifier;
+        this._modifier = parseInt(modifier);
         this._valid = true;
         return;
       }
 
       this._valid = false;
+  }
+
+  get Name()
+  {
+    return this._name;
+  }
+
+  set Name(val)
+  {
+    this._name = val;
+  }
+
+  get Value()
+  {
+    return this._value;
+  }
+
+  set Value(val)
+  {
+    this._value = val;
+  }
+
+  get Frequency()
+  {
+    return this._frequency;
+  }
+
+  set Frequency(val)
+  {
+    this._frequency = val;
+  }
+
+  get Modifier()
+  {
+    return this._modifier;
+  }
+
+  set Modifier(val)
+  {
+    this._modifier = val;
   }
 }
 
