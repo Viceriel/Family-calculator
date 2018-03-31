@@ -4,8 +4,8 @@
   "description": "Application for managing family spending",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "mkdirp build\\css build\\images && copy src\\app.html build",
+    "test": "mocha",
+    "prebuild": "npm test && npm run lint && mkdirp build\\css build\\images && copy src\\app.html build",
     "build": "webpack && lessc src/less/custom.less build/css/custom.css",
     "postbuild": "webpack-dev-server",
     "lint": "eslint src/js/*.js"
@@ -21,8 +21,12 @@
   },
   "devDependencies": {
     "eslint": "^4.18.1",
+    "jsdom": "11.6.2",
+    "jsdom-global": "3.0.2",
     "less": "^3.0.1",
     "mkdirp": "^0.5.1",
+    "mocha": "^5.0.5",
+    "mocha-jsdom": "^1.1.0",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"
   }
