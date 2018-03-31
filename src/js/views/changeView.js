@@ -1,6 +1,6 @@
 "use strict";
 
-let add = require("../src/addview");
+let add = require("../views/addview");
 
 /**
  * Component for change item view
@@ -45,7 +45,7 @@ class changeView extends add
     let frequency = document.getElementsByName("frequency");
     let modifiers = document.getElementsByName("modifier");
     let request = [];
-    let FinanceItem = require("../src/FinanceItem.js");
+    let FinanceItem = require("../../js/FinanceItem.js");
 
     this.removeInvalid(names, 1);
     request.push(new FinanceItem(names[0].value, values[0].value, frequency[0].value, modifiers[0].value));

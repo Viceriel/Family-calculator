@@ -1,6 +1,6 @@
 "use strict";
 
-let add = require("../src/InvestView.js");
+let add = require("../views/investView.js");
 
 /**
  * Component represents change of the invest view
@@ -42,7 +42,7 @@ class ChangeInvestView extends add
     let capitals = document.getElementsByName("capital");
     let increases = document.getElementsByName("increase");
     let request = [];
-    let InvestItem = require("../src/investItem.js");
+    let InvestItem = require("../../js/investItem.js");
 
     this.removeInvalid(names, 1);
     request.push(new InvestItem(names[0].value, values[0].value, frequency[0].value, modifiers[0].value, capitals[0].value, increases[0].value));

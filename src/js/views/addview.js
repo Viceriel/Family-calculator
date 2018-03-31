@@ -82,7 +82,7 @@ class AddView
     let frequency = document.getElementsByName("frequency");
     let modifiers = document.getElementsByName("modifier");
     let request = [];
-    let FinanceItem = require("../src/FinanceItem.js");
+    let FinanceItem = require("../../js/FinanceItem.js");
 
     let len = names.length;
     this.removeInvalid(names, len);

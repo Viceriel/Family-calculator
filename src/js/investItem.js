@@ -1,5 +1,5 @@
 "use strict";
- let financeItem = require("../src/FinanceItem.js");
+ let financeItem = require("../js/FinanceItem.js");
 
  /**
   * Class responsible for invest item handle. Derived from FinanceItem

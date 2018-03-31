@@ -1,6 +1,6 @@
 "use strict";
 
-let add = require("../src/addview");
+let add = require("../views/addview");
 
 /**
  * Invest view class derived from addview class
@@ -55,7 +55,7 @@ class InvestView extends add
     let capitals = document.getElementsByName("capital");
     let increases = document.getElementsByName("increase");
     let request = [];
-    let InvestItem = require("../src/investItem.js");
+    let InvestItem = require("../../js/investItem.js");
 
     let len = names.length;
     this.removeInvalid(names, len);

@@ -10,7 +10,8 @@ class App
    */
   constructor()
   {
-    let mainview = require("../src/view.js");
+    let mainview = require("../js/views/view.js");
+    let a = require("../js/FinanceItem.js");
 
     this._m = require("mithril");
     this._main = new mainview(this);
@@ -40,12 +41,12 @@ class App
    */
   changeView(e)
   {
-    let mainview = require("../src/view.js");
-    let addview =  require("../src/addview.js");
-    let investview = require("../src/InvestView.js");
-    let changeview = require("../src/changeView.js");
-    let changeinvest = require("../src/changeInvestView.js");
-    let noiseview = require("../src/noiseview.js")
+    let mainview = require("../js/views/view.js");
+    let addview =  require("../js/views/addview.js");
+    let investview = require("../js/views/investView.js");
+    let changeview = require("../js/views/changeView.js");
+    let changeinvest = require("../js/views/changeInvestView.js");
+    let noiseview = require("../js/views/noiseview.js");
     let view;
 
     switch(e.target.name)
