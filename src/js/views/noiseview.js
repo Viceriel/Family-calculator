@@ -57,6 +57,11 @@ class NoiseView
                                                             m("button", {class: "btn btn-outline-success btn-custom-green", onclick: this.recalculate.bind(this)}, "Calculate")]);
     }
 
+    get Valid()
+    {
+      return this._valid;
+    }
+
     /**
      * Mithril method called before component removal
      *
@@ -168,6 +173,11 @@ class NoiseView
          .attr("d", line);
     }
 
+    /**
+     * Check spreads between low and high points.
+     *
+     * @return {Boolean}
+     */
     spreadCheck()
     {
       if (this._higher - this._lower > 20)
@@ -176,13 +186,16 @@ class NoiseView
       return false;
     }
 
+    /**
+     * Processing user provided high and low values
+     */
     recalculate()
     {
       let data = document.getElementsByTagName("input");
       this._lower = parseFloat(data[0].value);
       this._higher = parseFloat(data[1].value);
 
-      if (this._higher - this._lower > 20)
+      if (spreadCheck())
       {
           let d3 = require("d3");
           d3.select("svg").selectAll("*").remove();
@@ -193,6 +206,11 @@ class NoiseView
 
     }
 
+    /**
+     * Layout of noiseview component
+     *
+     * @return {Array}
+     */
     view()
     {
 

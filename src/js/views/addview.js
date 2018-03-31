@@ -28,6 +28,11 @@ class AddView
                                                             this._button_next]);
   }
 
+  get Valid()
+  {
+    return this._valid;
+  }
+
   /**
    * Handler for button onclick function
    */

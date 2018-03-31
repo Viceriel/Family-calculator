@@ -42,6 +42,11 @@ class Main
       }
     }
 
+    get Valid()
+    {
+      return this._valid;
+    }
+
     /**
      * Mithril method called before component removal
      *

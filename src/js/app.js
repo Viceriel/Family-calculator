@@ -11,7 +11,6 @@ class App
   constructor()
   {
     let mainview = require("../js/views/view.js");
-    let a = require("../js/FinanceItem.js");
 
     this._m = require("mithril");
     this._main = new mainview(this);
