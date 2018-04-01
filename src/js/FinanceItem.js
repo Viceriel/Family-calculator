@@ -15,7 +15,12 @@ class FinanceItem
    */
   constructor(name, value, frequency, modifier)
   {
-      if(name && value && frequency && modifier)
+      if (value && modifier)
+      {
+          value = parseFloat(value);
+          modifier = parseFloat(modifier);
+      }
+      if(this.validator(name, value, frequency, modifier))
       {
         this._name = name;
         this._value = parseFloat(value);
@@ -26,6 +31,20 @@ class FinanceItem
       }
 
       this._valid = false;
+  }
+
+  validator(name, value, frequency, modifier)
+  {
+    if(typeof name != "string" || name == "")
+       return false;
+    else if (typeof value != "number" || value <= 0 || isNaN(value))
+       return false;
+    else if (typeof frequency != "string" || (frequency != "Month" && frequency != "Year"))
+       return false;
+    else if (typeof modifier != "number" || modifier <= 0 || isNaN(modifier))
+       return false;
+
+    return true;
   }
 
   get Name()

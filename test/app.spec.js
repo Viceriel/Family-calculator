@@ -1,20 +1,42 @@
 "use strict";
 
-let assert = require("assert");
 let jsdom = require("mocha-jsdom");
-let foo;
+let expect = require("chai").expect;
+let foo, app;
 
 describe("Application", ()=>
 {
   jsdom();
-  before(()=>
+  beforeEach(()=>
   {
     foo = require("../src/js/app.js");
-  })
+    app = new foo();
+  });
 
   it("App should exists", ()=>
              {
-               let a = new foo();
-               assert(a, new foo());
-             })
-})
+               expect(app).to.be.a("Object");
+               expect(app).to.have.property("_m");
+               expect(app).to.have.property("_map");
+               expect(app).to.have.property("_items");
+               expect(app).to.have.property("run");
+               expect(app).to.have.property("mapToItems");
+               expect(app).to.have.property("changeView");
+               expect(app.run).to.be.a("function");
+               expect(app.mapToItems).to.be.a("function");
+               expect(app.changeView).to.be.a("function");
+             });
+
+  it("Application run should change the dom", ()=>
+                                              {
+                                                app.run();
+                                                expect(document.getElementsByTagName("main")).to.have.length(1);
+                                                expect(document.getElementsByTagName("div")).to.have.length(8);
+                                              });
+it("Application items should be empty at the beggining", ()=>
+                                                         {
+                                                             expect(app._items["spend"]).to.have.length(0);
+                                                             expect(app._items["income"]).to.have.length(0);
+                                                             expect(app._items["investment"]).to.have.length(0);
+                                                         });
+});

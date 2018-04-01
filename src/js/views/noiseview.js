@@ -195,7 +195,7 @@ class NoiseView
       this._lower = parseFloat(data[0].value);
       this._higher = parseFloat(data[1].value);
 
-      if (spreadCheck())
+      if (this.spreadCheck())
       {
           let d3 = require("d3");
           d3.select("svg").selectAll("*").remove();

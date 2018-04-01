@@ -78,7 +78,7 @@ class App
             return;
     }
 
-    if (view._valid)
+    if (view.Valid)
         this._m.mount(document.body, view);
   }
 
