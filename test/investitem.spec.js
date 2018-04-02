@@ -1,22 +1,20 @@
 "use strict";
 
 let expect = require("chai").expect;
-let FinanceItem = require("../src/js/FinanceItem.js");
+let FinanceItem = require("../src/js/investItem.js");
 let item;
 
-describe("Finance item", ()=>
+describe("Invest item", ()=>
 {
-    it("Should be valid", ()=>
+    it("Invest item should have", ()=>
     {
-        item = new FinanceItem("Salary", 10, "Month", 1);
+        item = new FinanceItem("Salary", 10, "Month", 1, 1, 1);
+        expect(item).to.have.own.property("_capital");
+        expect(item).to.have.own.property("_increase");
         expect(item._valid).to.equal(true);
-        expect(item.Name).to.equal("Salary");
-        expect(item.Value).to.equal(10);
-        expect(item.Frequency).to.equal("Month");
-        expect(item.Modifier).to.equal(1);
     });
 
-    it ("Should be invalid", ()=>
+    it("Invest item should be invalid", ()=>
     {
         item = new FinanceItem();
         expect(item._valid).to.equal(false);
@@ -37,6 +35,10 @@ describe("Finance item", ()=>
         item = new FinanceItem("Salary", 10, "Hajla", 1);
         expect(item._valid).to.equal(false);
         item = new FinanceItem("Salary", 10, true, "false");
+        expect(item._valid).to.equal(false);
+        item = new FinanceItem("Salary", 10, "Month", 1, true);
+        expect(item._valid).to.equal(false);
+        item = new FinanceItem("Salary", 10, "Month", 1, true, true);
         expect(item._valid).to.equal(false);
     });
 });

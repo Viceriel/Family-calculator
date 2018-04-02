@@ -11,7 +11,7 @@
     *
     * @param {String} name name of financial operation
     * @param {Number} value value of financial operation
-    * @param {Number} frequency financial operation frequency value
+    * @param {String} frequency financial operation frequency value
     * @param {Number} modifier modifier of finance operation frequency
     * @param {Number} capital capital invested
     * @param {Number} increase expected increase of investment
@@ -20,17 +20,30 @@
    {
      super(name, value, frequency, modifier);
 
-     if (this._valid)
+     if (capital && increase)
      {
-       if (capital && increase)
-       {
+       capital = parseFloat(capital);
+       increase = parseFloat(increase);
+     }
+
+     if (this._valid && this.validation(capital, increase))
+     {
          this._capital = capital;
          this._increase = increase;
          return;
-       }
+     }
 
        this._valid = false;
-     }
+   }
+
+   validation(capital, increase)
+   {
+     if (typeof capital != "number" || capital < 0 || isNaN(capital))
+         return false;
+     else if (typeof increase != "number" || isNaN(increase))
+         return false;
+
+     return true;
    }
  }
 
