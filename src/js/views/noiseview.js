@@ -13,11 +13,12 @@ class NoiseView
      * @param {Array} income array with income items
      * @param {Number} size size of main container
      */
-    constructor(parent, m, income, size)
+    constructor(parent, m, income, size, noise)
     {
         this._parent = parent;
         this._m = m;
         this._title = m("h3", {class: "text-center"},"Noise settings");
+        this._noise = noise;
 
         let month_income = 0;
         let len = income.length;
@@ -27,8 +28,7 @@ class NoiseView
               month_income += income[i].Value;
         }
 
-        this._lower = parseInt(-month_income / 50, 10);
-        this._higher = parseInt(month_income / 20, 10);
+        noise.Borders = [parseInt(-month_income / 50, 10), parseInt(month_income / 20, 10)];
 
         if (month_income <=  0)
         {
@@ -42,9 +42,9 @@ class NoiseView
             this._valid = false;
             return;
         }
-        else if (!this.spreadCheck())
+        else if (!noise._valid)
         {
-            alert("Spread between low and high border value based on your monthly income is low! Please find a better job!");
+            alert(noise._error);
             this._valid = false;
             return;
         }
@@ -52,8 +52,8 @@ class NoiseView
         this._valid = true;
         this._svg = m("svg");
         this._samples = 6000000;
-        this._row = m("div", {class: "row text-center"}, [m("input[placeholder=Low border],[value="+parseInt(this._lower)+"]"),
-                                                            m("input[placeholder=High border],[value="+parseInt(this._higher)+"]"),
+        this._row = m("div", {class: "row text-center"}, [m("input[placeholder=Low border],[value="+parseInt(this._noise._low)+"]"),
+                                                            m("input[placeholder=High border],[value="+parseInt(this._noise._high)+"]"),
                                                             m("button", {class: "btn btn-outline-success btn-custom-green", onclick: this.recalculate.bind(this)}, "Calculate")]);
     }
 
@@ -84,14 +84,11 @@ class NoiseView
     createDataset()
     {
         let d3 = require("d3");
-        let size = (this._higher - this._lower);
-        let mean = Math.round((size / 2)) - (-1 * this._lower);
-        let normal = d3.randomNormal(Math.round(mean), Math.round((size / 100) * 20));
         let dataset = [];
 
-        for (let i = this._lower; i <= this._higher; i++)
+        for (let i = this._noise._low; i <= this._noise._high; i++)
         {
-          let index = i + (-1 * this._lower);
+          let index = i + (-1 * this._noise._low);
           dataset[index] = [];
           dataset[index][0] = i;
           dataset[index][1] = 0;
@@ -99,15 +96,15 @@ class NoiseView
 
         for (let i = 0; i < this._samples; i++)
         {
-          let index = Math.round(normal());
-          if (index >= this._lower && index < (this._higher + 1))
+          let index = Math.round(this._noise.Normal());
+          if (index >= this._noise._low && index < (this._noise._high + 1))
           {
-            index += (-1 * this._lower);
+            index += (-1 * this._noise._low);
             dataset[index][1] += 1;
           }
         }
 
-        return [dataset, Math.round((size / 2))];
+        return [dataset, Math.round((this._noise._size / 2))];
     }
 
     /**
@@ -125,7 +122,7 @@ class NoiseView
       let height = 420;
       let x = d3.scaleLinear()
                 .range([25, width - 15])
-                .domain([this._lower, this._higher]);
+                .domain([this._noise._low, this._noise._high]);
       let y = d3.scaleLinear()
                 .range([height - 20, 20])
                 .domain([0, dat[max][1]/this._samples]);
@@ -174,35 +171,21 @@ class NoiseView
     }
 
     /**
-     * Check spreads between low and high points.
-     *
-     * @return {Boolean}
-     */
-    spreadCheck()
-    {
-      if (this._higher - this._lower > 20)
-          return true;
-
-      return false;
-    }
-
-    /**
      * Processing user provided high and low values
      */
     recalculate()
     {
       let data = document.getElementsByTagName("input");
-      this._lower = parseFloat(data[0].value);
-      this._higher = parseFloat(data[1].value);
+      this._noise.Borders = [data[0].value, data[1].value];
 
-      if (this.spreadCheck())
+      if (this._noise._valid)
       {
           let d3 = require("d3");
           d3.select("svg").selectAll("*").remove();
           this.oncreate();
       }
       else
-        alert("Spread of numbers provided by your border values selection is too low!");
+        alert(this._noise._error);
 
     }
 

@@ -8,10 +8,10 @@ describe("Noise", ()=>
 {
     it("Noise should have", ()=>
     {
-        noise = new Noise(1, 1);
+        noise = new Noise();
+        noise.Borders = [1, 50];
         expect(noise).to.have.property("_mean");
         expect(noise).to.have.property("_std");
-        expect(noise).to.have.property("_activity");
         expect(noise).to.have.property("_low");
         expect(noise).to.have.property("_high");
     });
