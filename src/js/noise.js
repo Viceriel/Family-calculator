@@ -56,7 +56,7 @@ class Noise
      */
     validate(val)
     {
-      if (!Array.isArray(val) && val.length != 2)
+      if (!Array.isArray(val) || val.length != 2)
       {
           this._error = "Inappropriate length of array";
           return false;

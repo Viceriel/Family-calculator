@@ -25,7 +25,7 @@ class NoiseView
         for (let i = 0; i < len; i++)
         {
           if (income[i].Frequency == "Month")
-              month_income += income[i].Value;
+              month_income += income[i].Value * income[i].Modifier;
         }
 
         noise.Borders = [parseInt(-month_income / 50, 10), parseInt(month_income / 20, 10)];
@@ -150,10 +150,6 @@ class NoiseView
          .attr("class", "grid")
          .call(make_y_gridlines()
                                .tickSize(-width));
-
-      svg.append("g")
-         .attr("transform", "translate(25, 0)")
-         .call(d3.axisLeft(y));
 
       let pos = height - 20;
       svg.append("g")
