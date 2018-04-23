@@ -83,7 +83,6 @@ class NoiseView
      */
     createDataset()
     {
-        let d3 = require("d3");
         let dataset = [];
 
         for (let i = this._noise._low; i <= this._noise._high; i++)
@@ -112,10 +111,9 @@ class NoiseView
      *
      * @param {Object} vnode virtual node
      */
-    oncreate(vnode)
+    oncreate()
     {
       let d3 = require("d3");
-      let mi = document.getElementsByTagName("main")[0];
       let [dat, max] = this.createDataset();
 
       let width = 800;

@@ -5,10 +5,12 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha",
-    "prebuild": "npm test && npm run lint && mkdirp build\\css build\\images && copy src\\app.html build",
+    "prebuild": "npm test && npm run quality && mkdirp build\\css build\\images && copy src\\app.html build",
     "build": "webpack && lessc src/less/custom.less build/css/custom.css",
     "postbuild": "webpack-dev-server",
-    "lint": "eslint src/js/*.js"
+    "lint": "eslint ./src/js/*js ./src/js/views/*js",
+    "report": "es6-plato -r -d report src/js",
+    "quality": "npm run lint && npm run report"
   },
   "keywords": [
     "d3"
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "es6-plato": "^1.0.17",
     "eslint": "^4.18.1",
     "jsdom": "11.6.2",
     "jsdom-global": "3.0.2",
