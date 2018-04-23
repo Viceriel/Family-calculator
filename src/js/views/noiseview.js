@@ -108,8 +108,6 @@ class NoiseView
 
     /**
      * Manipulating with svg, creating grid, axis and painting dataset
-     *
-     * @param {Object} vnode virtual node
      */
     oncreate()
     {
@@ -192,9 +190,11 @@ class NoiseView
     {
 
       let main = [this._m("main", {class: "container begin"}, [this._title,
-                                                              this._svg,
-                                                              this._row]),
-                                                              this._m("footer", {class: "container-fluid text-center"}, [this._m("h3","Nič sa nezdá byť drahé na úver"),
+                                                               this._m("div", {class: "col-12 text-right"}, this._m("label", {class: "switch"},[this._m("input[type=checkbox]"),
+                                                                                                                                                this._m("span", {class: "slider round"})])),
+                                                               this._svg,
+                                                               this._row]),
+                                                               this._m("footer", {class: "container-fluid text-center"}, [this._m("h3","Nič sa nezdá byť drahé na úver"),
                                                                                                                          this._m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")])];
       return main;
     }
