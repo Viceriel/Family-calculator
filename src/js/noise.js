@@ -7,9 +7,22 @@ class Noise
 {
     /**
      * Constructor of noise class
+     *
+     *  @param {Boolean} flag activity of noise
      */
-    constructor()
+    constructor(flag)
     {
+      this._active = flag;
+    }
+
+    set Active(val)
+    {
+      this._active = val;
+    }
+
+    get Active()
+    {
+      return this._active;
     }
 
     set Borders(val)

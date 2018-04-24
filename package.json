@@ -4,7 +4,7 @@
   "description": "Application for managing family spending",
   "main": "app.js",
   "scripts": {
-    "test": "mocha",
+    "test": "nyc --reporter=html --reporter=text mocha",
     "prebuild": "npm test && npm run quality && mkdirp build\\css build\\images && copy src\\app.html build",
     "build": "webpack && lessc src/less/custom.less build/css/custom.css",
     "postbuild": "webpack-dev-server",
@@ -20,7 +20,8 @@
   "dependencies": {
     "d3": "^4.13.0",
     "mithril": "^1.1.6",
-    "npm": "^5.8.0"
+    "npm": "^5.8.0",
+    "nyc": "^11.7.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",

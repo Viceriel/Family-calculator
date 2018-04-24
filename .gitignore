@@ -2,3 +2,5 @@
 **/build
 *.log
 **/report
+**/.nyc_output
+**/coverage

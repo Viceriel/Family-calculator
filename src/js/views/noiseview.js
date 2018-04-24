@@ -188,8 +188,11 @@ class NoiseView
      */
     view()
     {
+      let main_class = "container begin";
+      if (!this._noise.Active)
+          main_class = "container inactive begin";
 
-      let main = [this._m("main", {class: "container begin"}, [this._title,
+      let main = [this._m("main", {class: main_class}, [this._title,
                                                                this._m("div", {class: "col-12 text-right"}, this._m("label", {class: "switch"},[this._m("input[type=checkbox]"),
                                                                                                                                                 this._m("span", {class: "slider round"})])),
                                                                this._svg,

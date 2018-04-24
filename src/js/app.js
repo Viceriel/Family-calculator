@@ -15,7 +15,7 @@ class App
 
     this._m = require("mithril");
     this._main = new mainview(this);
-    this._noise = new Noise();
+    this._noise = new Noise(false);
     this._items = {};
     this._items["spend"] = [];
     this._items["income"] = [];
