@@ -26,7 +26,7 @@ class Main
       this._noise = m("div", {class: "row text-right lead"}, m("div", {class: "col-11"}, m("label", ["Noise:",
                                                                                                 m("span[id=noise]", {class: "fa fa-cog", onclick: this.noiseProcess.bind(this)})])));
 
-      if (request && request.length !=0)
+      if (request && request.length != 0)
       {
        let types = ["_spents", "_income", "_investment"];
        let types1 = ["spend", "income", "investment"];

@@ -28,7 +28,8 @@ class NoiseView
               month_income += income[i].Value * income[i].Modifier;
         }
 
-        noise.Borders = [parseInt(-month_income / 50, 10), parseInt(month_income / 20, 10)];
+        if (!this._noise.Active)
+            noise.Borders = [parseInt(-month_income / 50, 10), parseInt(month_income / 20, 10)];
 
         if (month_income <=  0)
         {
@@ -52,9 +53,13 @@ class NoiseView
         this._valid = true;
         this._svg = m("svg");
         this._samples = 6000000;
-        this._row = m("div", {class: "row text-center"}, [m("input[placeholder=Low border],[value="+parseInt(this._noise._low)+"]"),
-                                                            m("input[placeholder=High border],[value="+parseInt(this._noise._high)+"]"),
-                                                            m("button", {class: "btn btn-outline-success btn-custom-green", onclick: this.recalculate.bind(this)}, "Calculate")]);
+
+        let disable = "";
+        if (!this._noise.Active)
+            disable = "[disabled]";
+        this._row = m("div", {class: "row text-center"}, [m("input[placeholder=Low border],[value="+parseInt(this._noise._low)+"],"+disable),
+                                                            m("input[placeholder=High border],[value="+parseInt(this._noise._high)+"],"+disable),
+                                                            m("button"+disable, {class: "btn btn-outline-success btn-custom-green", onclick: this.recalculate.bind(this)}, "Calculate")]);
     }
 
     get Valid()
@@ -165,10 +170,11 @@ class NoiseView
     /**
      * Processing user provided high and low values
      */
-    recalculate()
+    recalculate(e)
     {
+      e.redraw = false;
       let data = document.getElementsByTagName("input");
-      this._noise.Borders = [data[0].value, data[1].value];
+      this._noise.Borders = [data[1].value, data[2].value];
 
       if (this._noise._valid)
       {
@@ -189,17 +195,49 @@ class NoiseView
     view()
     {
       let main_class = "container begin";
+      let check_state = "[checked]";
       if (!this._noise.Active)
-          main_class = "container inactive begin";
+      {
+          main_class = "container begini inactive";
+          check_state = "";
+      }
 
       let main = [this._m("main", {class: main_class}, [this._title,
-                                                               this._m("div", {class: "col-12 text-right"}, this._m("label", {class: "switch"},[this._m("input[type=checkbox]"),
-                                                                                                                                                this._m("span", {class: "slider round"})])),
+                                                               this._m("div", {class: "col-12 text-right"}, this._m("label", {class: "switch"},[this._m("input[type=checkbox],"+check_state+""),
+                                                                                                                                                this._m("span", {class: "slider round",  onclick: this.noiseService.bind(this)})])),
                                                                this._svg,
-                                                               this._row]),
+                                                               this._row,
+                                                               this._m("button[name=main]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this._parent.changeView.bind(this._parent)}, "Accept")]),
                                                                this._m("footer", {class: "container-fluid text-center"}, [this._m("h3","Nič sa nezdá byť drahé na úver"),
                                                                                                                          this._m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")])];
       return main;
+    }
+
+    /**
+     * Noise switch click handler
+     * @param {Object} e event object
+     */
+    noiseService(e)
+    {
+      e.redraw = false;
+      this._noise.Active = !this._noise.Active;
+      let main = document.getElementsByTagName("main")[0];
+      let inputs = document.getElementsByTagName("input");
+      let button = document.getElementsByTagName("button")[0];
+      if (this._noise.Active)
+      {
+        main.style.opacity = 1;
+        inputs[1].disabled = false;
+        inputs[2].disabled = false;
+        button.disabled = false;
+      }
+      else
+      {
+        main.style.opacity = 0.5;
+        inputs[1].disabled = true;
+        inputs[2].disabled = true;
+        button.disabled = true;
+      }
     }
 }
 

@@ -24,6 +24,7 @@
         ],
         "no-cond-assign": [
           "error"
-        ]
+        ],
+        "no-magic-numbers": "warn"
     }
 }
