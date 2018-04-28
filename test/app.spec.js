@@ -9,8 +9,8 @@ describe("Application", ()=>
   jsdom();
   beforeEach(()=>
   {
-    foo = require("../src/js/app.js");
-    app = new foo();
+    let App = require("../src/js/app.js");
+    app = new App();
   });
 
   it("App should exists", ()=>
