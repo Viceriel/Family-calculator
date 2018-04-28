@@ -48,6 +48,7 @@ class InvestView extends add
    */
   processItems(e)
   {
+    e.target.disabled = true;
     let names = document.getElementsByName("name");
     let values = document.getElementsByName("value");
     let frequency = document.getElementsByName("frequency");
