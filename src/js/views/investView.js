@@ -48,7 +48,6 @@ class InvestView extends add
    */
   processItems(e)
   {
-    e.target.disabled = true;
     let names = document.getElementsByName("name");
     let values = document.getElementsByName("value");
     let frequency = document.getElementsByName("frequency");
@@ -70,6 +69,7 @@ class InvestView extends add
       }
     }
 
+    e.target.disabled = true;
     e.request = {};
     e.request.data = request;
     e.request.type = this._look;
