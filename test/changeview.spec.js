@@ -40,5 +40,12 @@ describe("Changeview", ()=>
       expect(select.selected).to.equal(view._item.Freqeuncy);
       let button = document.getElementsByTagName("button");
       expect(button.length).to.equal(1);
+      view.processItems();
+      let invalid = document.getElementsByClassName("invalid");
+      expect(invalid.length).to.equal(0);
+      inputs[0].value = "";
+      view.processItems();
+      invalid = document.getElementsByClassName("invalid");
+      expect(invalid.length).to.equal(1);
     });
 });

@@ -26,6 +26,9 @@ describe("Noise", ()=>
     {
       noise.Borders = [1, 50];
       expect(noise._valid).to.equal(true);
+      let data = noise.createDataset(60000);
+      expect(data[0].length).to.equal(50);
+      expect(data[1]).to.equal(25);
     });
 
     it("Noise should be invalid", ()=>

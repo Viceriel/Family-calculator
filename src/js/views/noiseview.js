@@ -82,42 +82,12 @@ class NoiseView
     }
 
     /**
-     * Method responsible for creating histogram from range low to high
-     *
-     * @return {Array} created dataset
-     */
-    createDataset()
-    {
-        let dataset = [];
-
-        for (let i = this._noise._low; i <= this._noise._high; i++)
-        {
-          let index = i + (-1 * this._noise._low);
-          dataset[index] = [];
-          dataset[index][0] = i;
-          dataset[index][1] = 0;
-        }
-
-        for (let i = 0; i < this._samples; i++)
-        {
-          let index = Math.round(this._noise.Normal());
-          if (index >= this._noise._low && index < (this._noise._high + 1))
-          {
-            index += (-1 * this._noise._low);
-            dataset[index][1] += 1;
-          }
-        }
-
-        return [dataset, Math.round((this._noise._size / 2))];
-    }
-
-    /**
      * Manipulating with svg, creating grid, axis and painting dataset
      */
     oncreate()
     {
       let d3 = require("d3");
-      let [dat, max] = this.createDataset();
+      let [dat, max] = this._noise.createDataset(this._samples);
 
       let width = 800;
       let height = 420;

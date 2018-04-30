@@ -50,6 +50,9 @@ class App
     let noiseview = require("../js/views/noiseview.js");
     let view;
 
+    if (!e)
+        return;
+        
     switch(e.target.name)
     {
         case "spend":

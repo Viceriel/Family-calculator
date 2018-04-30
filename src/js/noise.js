@@ -87,6 +87,36 @@ class Noise
       return true;
     }
 
+    /**
+     * Method responsible for creating histogram from range low to high
+     *
+     * @param {Number} samples size of the dataset
+     * @return {Array} created dataset
+     */
+    createDataset(samples)
+    {
+        let dataset = [];
+
+        for (let i = this._low; i <= this._high; i++)
+        {
+          let index = i + (-1 * this._low);
+          dataset[index] = [];
+          dataset[index][0] = i;
+          dataset[index][1] = 0;
+        }
+
+        for (let i = 0; i < samples; i++)
+        {
+          let index = Math.round(this.Normal());
+          if (index >= this._low && index < (this._high + 1))
+          {
+            index += (-1 * this._low);
+            dataset[index][1] += 1;
+          }
+        }
+
+        return [dataset, Math.round((this._size / 2))];
+    }
 }
 
 module.exports = Noise;
