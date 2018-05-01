@@ -36,7 +36,8 @@ class Main
          let len = request[types1[j]].length;
          for (let i = 0; i < len; i++)
          {
-           this[types[j]].children.push(m("p", {class: "lead items", onclick: this.processChange.bind(this)}, request[types1[j]][i]._name));
+           this[types[j]].children.push(m("p", {class: "lead items", onclick: this.processChange.bind(this)}, [request[types1[j]][i]._name,
+                                                                                                               m("p", {class: "removal"} ,"x")]));
          }
        }
       }
@@ -68,26 +69,31 @@ class Main
      */
     processChange(e)
     {
-       let children = e.target.parentNode.childNodes;
-       let index = 0;
+      if (e.target.previousSibling.nodeName == "#text")
+          this.remove(e);
+      else
+      {
+          let children = e.target.parentNode.childNodes;
+          let index = 0;
 
-       let len = children.length;
-       for (let i = 2; i < len; i++)
-       {
-         if (e.target == children[i])
-         {
-            index = i - 2;
-            break;
-         }
-       }
+          let len = children.length;
+          for (let i = 2; i < len; i++)
+          {
+              if (e.target == children[i])
+              {
+                  index = i - 2;
+                  break;
+              }
+          }
 
-       e.target.name = "change";
-       e.target.itemLocation = index;
-       e.target.itemName = this._parent._map.get(children[0].innerHTML);
-       if (e.target.itemName == "investment")
-           e.target.name += "invest";
+          e.target.name = "change";
+          e.target.itemLocation = index;
+          e.target.itemName = this._parent._map.get(children[0].innerHTML);
+          if (e.target.itemName == "investment")
+              e.target.name += "invest";
 
-       this._parent.changeView(e);
+          this._parent.changeView(e);
+     }
     }
 
     /**
@@ -120,6 +126,16 @@ class Main
                     m("footer", {class: "container-fluid text-center"}, [m("h3","Nič sa nezdá byť drahé na úver"),
                                                                                  m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")])];
         return main;
+    }
+
+    /**
+     * Remove targeted item
+     *
+     * @param  {[type]} e event object
+     */
+    remove(e)
+    {
+      alert(e);
     }
 }
 
