@@ -45,7 +45,33 @@ class AddView
     par = par.parentNode;
     let div = document.createElement("div");
     par.parentNode.insertBefore(div, btn1);
-    this._m.render(par.nextSibling, this._row);
+    let regular_row = this._m("div", {class: "row text-center"}, [this._m("input[type=text],[placeholder=Name of "+ this._look+"],[name=name]"),
+                                                                  this._m("input[type=text],[placeholder=Value of "+ this._look+"], [name=value]"),
+                                                                  this._m("select[name=frequency]", [this._m("option", "Year"),
+                                                                                                     this._m("option", "Month")]),
+                                                                  this._m("input[type=text],[placeholder=Modifier], [name=modifier]"),
+                                                                  this._m("p",{class: "removal1", onclick: this.remoweRow.bind(this)}, "X"),
+                                                                  this._button_next]);
+    this._m.render(par.nextSibling, regular_row);
+  }
+
+  /**
+   * Remove row from view
+   *
+   * @param  {Object} e event object
+   */
+  remoweRow(e)
+  {
+      let btn = e.target.parentNode.getElementsByTagName("button");
+
+      if (confirm("Removal can erase your data."))
+      {
+          if (btn.length != 0)
+          {
+              e.target.parentNode.parentNode.previousSibling.firstChild.appendChild(btn[0]);
+          }
+          e.target.parentNode.parentNode.parentNode.removeChild(e.target.parentNode.parentNode);
+      }
   }
 
   /**
