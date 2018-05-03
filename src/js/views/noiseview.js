@@ -173,8 +173,8 @@ class NoiseView
       }
 
       let main = [this._m("main", {class: main_class}, [this._title,
-                                                               this._m("div", {class: "col-12 text-right"}, this._m("label", {class: "switch"},[this._m("input[type=checkbox],"+check_state+""),
-                                                                                                                                                this._m("span", {class: "slider round",  onclick: this.noiseService.bind(this)})])),
+                                                        this._m("div", {class: "col-12 text-right"}, this._m("label", {class: "switch"},[this._m("input[type=checkbox],"+check_state+""),
+                                                                                                                                         this._m("span", {class: "slider round",  onclick: this.noiseService.bind(this)})])),
                                                                this._svg,
                                                                this._row,
                                                                this._m("button[name=main]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this._parent.changeView.bind(this._parent)}, "Accept")]),

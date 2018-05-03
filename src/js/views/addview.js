@@ -17,6 +17,7 @@ class AddView
     this._valid = true;
     this._look = look;
     this._m = m;
+    this._back = m("span[id=back]", {class: "fa fa-arrow-circle-o-left", onclick: this.back.bind(this)});
     this._title = this._m("h3", "Add " + look);
     this._button_next = this._m("button", {class: "btn btn-outline-success btn-custom-green", onclick: this.removeBtn.bind(this)}, "Next");
     this._button_confirm = this._m("button[name=main]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this.processItems.bind(this)}, "Confirm");
@@ -31,6 +32,20 @@ class AddView
   get Valid()
   {
     return this._valid;
+  }
+
+  /**
+   * Process operation back to default view
+   *
+   * @param  {Object} e event object
+   */
+  back(e)
+  {
+      if (confirm("Do you really want go back to default view? All your unconfirmed data will be lost."))
+      {
+          e.target.name = "main";
+          this._parent.changeView(e);
+      }
   }
 
   /**
@@ -157,7 +172,8 @@ class AddView
   view()
   {
     let m = this._m;
-    let main = [m("main", {class: "begin container"}, [this._title,
+    let main = [m("main", {class: "begin container"}, [this._back,
+                                                       this._title,
                                                        m("div", this._row),
                                                        this._button_confirm]),
                                                        m("footer", {class: "container-fluid text-center"}, [m("h3","Nič sa nezdá byť drahé na úver"),
