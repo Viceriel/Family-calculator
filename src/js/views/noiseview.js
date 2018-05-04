@@ -177,7 +177,7 @@ class NoiseView
                                                                                                                                          this._m("span", {class: "slider round",  onclick: this.noiseService.bind(this)})])),
                                                                this._svg,
                                                                this._row,
-                                                               this._m("button[name=main]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this._parent.changeView.bind(this._parent)}, "Accept")]),
+                                                               this._m("button[name=main]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this._parent.changeView.bind(this._parent), style: "opacity:1"}, "Accept")]),
                                                                this._m("footer", {class: "container-fluid text-center"}, [this._m("h3","Nič sa nezdá byť drahé na úver"),
                                                                                                                          this._m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")])];
       return main;
