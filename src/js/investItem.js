@@ -45,6 +45,26 @@
 
      return true;
    }
+
+   get Capital()
+   {
+     return this._capital;
+   }
+
+   set Capital(val)
+   {
+     this._capital = val;
+   }
+
+   get Increase()
+   {
+     return this._increase;
+   }
+
+   set Increase(val)
+   {
+     this._increase = val;
+   }
  }
 
  module.exports = InvestItem;

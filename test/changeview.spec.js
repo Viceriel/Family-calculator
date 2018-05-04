@@ -4,7 +4,7 @@ let jsdom = require("mocha-jsdom");
 let expect = require("chai").expect;
 let view;
 
-describe("Changeview", ()=>
+describe("Change view", ()=>
 {
     jsdom();
     beforeEach("Creating view", ()=>
@@ -47,5 +47,25 @@ describe("Changeview", ()=>
       view.processItems();
       invalid = document.getElementsByClassName("invalid");
       expect(invalid.length).to.equal(1);
+      inputs[0].value = "Salary";
+      view.processItems();
+      invalid = document.getElementsByClassName("invalid");
+      expect(invalid.length).to.equal(0);
+      inputs[1].value = "";
+      view.processItems();
+      invalid = document.getElementsByClassName("invalid");
+      expect(invalid.length).to.equal(1);
+      inputs[1].value = "500";
+      view.processItems();
+      invalid = document.getElementsByClassName("invalid");
+      expect(invalid.length).to.equal(0);
+      inputs[2].value = "";
+      view.processItems();
+      invalid = document.getElementsByClassName("invalid");
+      expect(invalid.length).to.equal(1);
+      inputs[2].value = "1";
+      view.processItems();
+      invalid = document.getElementsByClassName("invalid");
+      expect(invalid.length).to.equal(0);
     });
 });

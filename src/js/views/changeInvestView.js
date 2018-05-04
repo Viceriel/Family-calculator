@@ -55,8 +55,9 @@ class ChangeInvestView extends add
     this._item.Name = names[0].value;
     this._item.Value = values[0].value;
     this._item.Frequency = frequency[0].value;
-    this._item._modifier = modifiers[0].value;
-    this._item._capital = capitals[0].value;
+    this._item.Modifier = modifiers[0].value;
+    this._item.Capital = capitals[0].value;
+    this._item.Increase = increases[0].value;
 
     this._parent.changeView(e);
   }
