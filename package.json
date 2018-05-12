@@ -4,7 +4,7 @@
   "description": "Application for managing family spending",
   "main": "app.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text mocha",
+    "test": "nyc --reporter=html --reporter=text mocha --timeout 15000",
     "prebuild": "npm test && npm run quality && mkdirp build\\css build\\images && copy src\\app.html build",
     "build": "webpack && lessc src/less/custom.less build/css/custom.css",
     "postbuild": "webpack-dev-server",

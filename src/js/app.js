@@ -52,7 +52,7 @@ class App
 
     if (!e)
         return;
-        
+
     switch(e.target.name)
     {
         case "spend":
