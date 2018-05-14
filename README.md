@@ -1,3 +1,5 @@
+[![DeepScan grade](https://deepscan.io/api/projects/2342/branches/13940/badge/grade.svg)](https://deepscan.io/dashboard#view=project&pid=2342&bid=13940)
+
 # Family calculator
 
 Application for counting of family increase and spending and finance prediction
@@ -23,7 +25,7 @@ Node.js installed
 1. Enjoy
 
 ### For regular start of app
- 
+
 1. Run from node command line `npm run build`
 1. Go to build directory and use browser to run a app.html file
 1. Enjoy
