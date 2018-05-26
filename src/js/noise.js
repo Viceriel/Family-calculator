@@ -13,6 +13,15 @@ class Noise
     constructor(flag)
     {
       this._active = flag;
+      this._normal = ()=>
+      {
+        return 0;
+      };
+    }
+
+    Normal()
+    {
+      return this._normal() * this._active;
     }
 
     set Active(val)
@@ -57,7 +66,7 @@ class Noise
       this._mean = Math.round((this._size / 2)) - (-1 * this._low);
       this._std = Math.round(this._size / 100) * 20;
       let d3 = require("d3");
-      this.Normal = d3.randomNormal(Math.round(this._mean), Math.round((this._size / 100) * 20));
+      this._normal = d3.randomNormal(Math.round(this._mean), Math.round((this._size / 100) * 20));
       return true;
     }
 
@@ -107,7 +116,7 @@ class Noise
 
         for (let i = 0; i < samples; i++)
         {
-          let index = Math.round(this.Normal());
+          let index = Math.round(this._normal());
           if (index >= this._low && index < (this._high + 1))
           {
             index += (-1 * this._low);

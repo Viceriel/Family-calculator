@@ -38,11 +38,17 @@ class ComputeEngine
        this._integrated_incomes = [];
        this._integrated_investments = [];
        this._integrated_wealth = [];
+       this._valid = true;
 
        let len = this._data.investment.length;
        for (let i = 0; i < len; i++)
             this._integrated_investments[i] = [];
 
+   }
+
+   get Valid()
+   {
+     return this._valid;
    }
 
    get IntegratedIncomes()
@@ -81,7 +87,7 @@ class ComputeEngine
        for(let i = 1; i <= size; i++)
        {
            let index = i - 1;
-           let increment = this.computeBatch("income", "Month") - this.computeBatch("spend", "Month") - this.computeMonthInvest(i);
+           let increment = this.computeBatch("income", "Month") - this.computeBatch("spend", "Month") - this.computeMonthInvest(i) - this._noise.Normal();
            if( i % 12 == 0)
            {
              increment += this.computeBatch("income", "Year") - this.computeBatch("spend", "Year") - this.computeYearInvest(i);

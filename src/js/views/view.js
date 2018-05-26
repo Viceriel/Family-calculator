@@ -28,7 +28,7 @@ class Main
         this._final = m("div", {class: "row text-right"}, m("div", {class: "col-11"}, [m("select", [m("option", "1"),
                                                                                                                  m("option", "2"),
                                                                                                                  m("option", "3")]),
-                                                                                       m("button", {class: "btn btn-outline-success btn-custom-yellow"}, "Compute")]));
+                                                                                       m("button[name=report]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this._parent.changeView.bind(this._parent)}, "Compute")]));
 
         if (request && request.length != 0)
         {

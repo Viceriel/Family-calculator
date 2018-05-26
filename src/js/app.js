@@ -42,12 +42,15 @@ class App
    */
   changeView(e)
   {
-    let mainview = require("../js/views/view.js");
-    let addview =  require("../js/views/addview.js");
-    let investview = require("../js/views/investView.js");
-    let changeview = require("../js/views/changeView.js");
-    let changeinvest = require("../js/views/changeInvestView.js");
-    let noiseview = require("../js/views/noiseview.js");
+    let mainview = require("../js/views/view");
+    let addview =  require("../js/views/addview");
+    let investview = require("../js/views/investView");
+    let changeview = require("../js/views/changeView");
+    let changeinvest = require("../js/views/changeInvestView");
+    let noiseview = require("../js/views/noiseview");
+    let reportview = require("../js/views/reportview");
+    let computeEngine = require("../js/computeEngine");
+    let engine = 0;
     let view;
 
     if (!e)
@@ -78,6 +81,10 @@ class App
             break;
         case "noise":
             view = new noiseview(this, this._m, this._items["income"], e.mainsize, this._noise);
+            break;
+        case "report":
+            engine = new computeEngine(1, 1000, this._items, this._noise);
+            view = new reportview(this, this._m, engine);
             break;
         default:
             return;

@@ -21,7 +21,8 @@ describe("Compute engine", ()=>
       data.investment[0] = new Invest("Pension Fund", 100, "Month", 1, 1000, 6);
       data.investment[1] = new Invest("Luck",1000, "Year", 1, 0, 10);
       let ComputeEngine = require("../src/js/computeEngine");
-      let noise = new Noise(true);
+      let noise = new Noise(false);
+      noise.Borders = [parseInt(-500 / 50, 10), parseInt(500 / 20, 10)];
       let range = 2;
       engine = new ComputeEngine(range, savings, data, noise);
    });
