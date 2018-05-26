@@ -31,7 +31,7 @@ describe("Application", ()=>
                                               {
                                                 app.run();
                                                 expect(document.getElementsByTagName("main")).to.have.length(1);
-                                                expect(document.getElementsByTagName("div")).to.have.length(8);
+                                                expect(document.getElementsByTagName("div")).to.have.length(10);
                                               });
 it("Application items should be empty at the beggining", ()=>
                                                          {

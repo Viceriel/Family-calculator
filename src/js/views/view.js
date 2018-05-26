@@ -25,6 +25,10 @@ class Main
                                                                                    m("button[name=investment]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)}, "Add investment")]);
         this._noise = m("div", {class: "row text-right lead"}, m("div", {class: "col-11"}, m("label", ["Noise:",
                                                                                                        m("span[id=noise]", {class: "fa fa-cog", onclick: this.noiseProcess.bind(this)})])));
+        this._final = m("div", {class: "row text-right"}, m("div", {class: "col-11"}, [m("select", [m("option", "1"),
+                                                                                                                 m("option", "2"),
+                                                                                                                 m("option", "3")]),
+                                                                                       m("button", {class: "btn btn-outline-success btn-custom-yellow"}, "Compute")]));
 
         if (request && request.length != 0)
         {
@@ -114,7 +118,8 @@ class Main
                                                       m("div", {class: "row text-center"}, [this._income,
                                                                                             this._spents,
                                                                                             this._investment]),
-                                                      this._noise]),
+                                                      this._noise,
+                                                      this._final]),
                       m("footer", {class: "container-fluid text-center"}, [m("h3","Nič sa nezdá byť drahé na úver"),
                                                                                    m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")])];
           return main;

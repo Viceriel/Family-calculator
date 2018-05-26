@@ -69,6 +69,11 @@ class ComputeEngine
        this.integrations(size);
    }
 
+   /**
+    * Control finance integration
+    *
+    * @param  {Number} size time scale for finance data integration
+    */
    integrations(size)
    {
        let batch = this._savings;

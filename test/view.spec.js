@@ -38,7 +38,7 @@ describe("View", ()=>
          let paragraps = document.getElementsByClassName("items");
          expect(paragraps.length).to.equal(3);
          let btns = document.getElementsByTagName("button");
-         expect(btns.length).to.equal(3);
-         
+         expect(btns.length).to.equal(4);
+
     });
 });
