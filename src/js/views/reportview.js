@@ -16,6 +16,8 @@ class ReportView
         this._parent = parent;
         this._back = m("span[id=back]", {class: "fa fa-arrow-circle-o-left", onclick: this.back.bind(this)});
         this._valid = this._compute_engine.Valid;
+        if (this._valid)
+            this._compute_engine.integrate();
     }
 
     get Valid()
@@ -30,11 +32,76 @@ class ReportView
      */
     back(e)
     {
-        if (confirm("Do you really want go back to default view? All your unconfirmed data will be lost."))
-        {
-            e.target.name = "main";
-            this._parent.changeView(e);
-        }
+        e.target.name = "main";
+        this._parent.changeView(e);
+    }
+
+    oncreate()
+    {
+      setTimeout(()=>
+      {
+          let main = document.getElementsByTagName("main")[0];
+          const WIDTH = main.offsetWidth - 40;
+          const HEIGHT = parseInt(WIDTH / 2, 10);
+
+          let d3 = require("d3");
+          let dataset = this._compute_engine.IntegratedWhealth;
+          const LEN = dataset.data.length;
+
+          let x = d3.scaleLinear()
+                     .range([40, WIDTH - 25])
+                     .domain([0, LEN-1]);
+          let y = d3.scaleLinear()
+                    .range([HEIGHT - 20, 20])
+                    .domain([dataset.min, dataset.max]);
+
+          d3.select("main")
+               .append("svg")
+              .attr("width", WIDTH)
+              .attr("height", HEIGHT);
+
+          let svg = d3.select("svg");
+          let line = d3.line()
+                        .x((d, i)=>{return x(i);})
+                        .y((d)=>{return y(d);});
+
+          svg.append("path")
+                 .data([dataset.data])
+                 .attr("class", "line1")
+                 .attr("d", line);
+
+          let pos = HEIGHT - 20;
+          svg.append("g")
+                .attr("transform", "translate(0," + pos + ")")
+                .call(d3.axisBottom(x));
+
+          svg.append("g")
+             .attr("transform", "translate(40, 0)")
+             .call(d3.axisLeft(y));
+
+             function make_x_gridlines()
+             {
+                   return d3.axisBottom(x)
+                            .ticks(8);
+             }
+
+             function make_y_gridlines()
+             {
+                 return d3.axisLeft(y)
+                          .ticks(8);
+             }
+
+             svg.append("g")
+                .attr("class", "grid")
+                .attr("transform", "translate(0," + HEIGHT + ")")
+                .call(make_x_gridlines()
+                      .tickSize(-HEIGHT));
+
+              svg.append("g")
+                  .attr("class", "grid")
+                  .call(make_y_gridlines()
+                        .tickSize(-WIDTH));
+      }, 500);
     }
 
     /**
@@ -45,7 +112,8 @@ class ReportView
     view()
     {
       let m = this._m;
-      let main = [m("main", {class: "begin container"}, [this._back]),
+      let main = [m("main", {class: "begin container"}, [this._back,
+                                                         m("h3", {class: "text-center"}, "Report")]),
                   m("footer", {class: "container-fluid text-center"}, [m("h3","Nič sa nezdá byť drahé na úver"),
                                                                        m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")])];
       return main;

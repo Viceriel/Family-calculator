@@ -51,7 +51,7 @@ class NoiseView
         }
 
         this._valid = true;
-        this._svg = m("svg");
+        this._svg = m("svg", {class: "svge"});
         this._samples = 6000000;
 
         let disable = "";

@@ -12,10 +12,12 @@ class ComputeEngine
     */
    constructor(range, savings, data, noise)
    {
-       if (isNaN(parseInt(range)))
+       range = parseInt(range);
+       if (isNaN(range))
        {
            this._valid = false;
            this._error = "Wrong range.";
+           return;
        }
        this._range = range;
 
@@ -23,13 +25,16 @@ class ComputeEngine
        {
          this._valid = false;
          this._error = "No items provided!";
+         return;
        }
        this._data = data;
 
-       if (isNaN(parseInt(range)))
+       savings = parseInt(savings);
+       if (isNaN(savings))
        {
          this._valid = false;
          this._error = "Wrong savings provided!";
+         return;
        }
        this._savings = savings;
        this._noise = noise;
@@ -37,7 +42,10 @@ class ComputeEngine
        this._month_ratio = 0;
        this._integrated_incomes = [];
        this._integrated_investments = [];
-       this._integrated_wealth = [];
+       this._integrated_wealth = {};
+       this._integrated_wealth.data = [];
+       this._integrated_wealth.min;
+       this._integrated_wealth.max;
        this._valid = true;
 
        let len = this._data.investment.length;
@@ -95,7 +103,19 @@ class ComputeEngine
            }
            batch += increment;
            this._integrated_incomes[index] = batch;
-           this._integrated_wealth[index] = batch + this.integrateInvest("Month", index) + invest_year;
+           this._integrated_wealth.data[index] = batch + this.integrateInvest("Month", index) + invest_year;
+           if (i == 1)
+           {
+             this._integrated_wealth.min = this._integrated_wealth.data[index];
+             this._integrated_wealth.max = this._integrated_wealth.data[index];
+           }
+           else
+           {
+               if (this._integrated_wealth.data[index] > this._integrated_wealth.max)
+                   this._integrated_wealth.max = this._integrated_wealth.data[index];
+               if (this._integrated_wealth.data[index] < this._integrated_wealth.min)
+                   this._integrated_wealth.min = this._integrated_wealth.data[index];
+           }
        }
    }
 

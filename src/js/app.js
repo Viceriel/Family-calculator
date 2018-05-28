@@ -52,6 +52,8 @@ class App
     let computeEngine = require("../js/computeEngine");
     let engine = 0;
     let view;
+    let savings = 0;
+    let range = 0;
 
     if (!e)
         return;
@@ -83,7 +85,9 @@ class App
             view = new noiseview(this, this._m, this._items["income"], e.mainsize, this._noise);
             break;
         case "report":
-            engine = new computeEngine(1, 1000, this._items, this._noise);
+            savings = document.getElementsByTagName("input")[0].value;
+            range = document.getElementsByTagName("select")[0].value;
+            engine = new computeEngine(range, savings, this._items, this._noise);
             view = new reportview(this, this._m, engine);
             break;
         default:
