@@ -20,6 +20,7 @@ class App
     this._items["spend"] = [];
     this._items["income"] = [];
     this._items["investment"] = [];
+    this._savings = 0;
 
     this._map = new Map();
     this._map.set("Income", "income");
@@ -42,14 +43,10 @@ class App
    */
   changeView(e)
   {
-    let mainview = require("../js/views/view");
-    let addview =  require("../js/views/addview");
-    let investview = require("../js/views/investView");
-    let changeview = require("../js/views/changeView");
-    let changeinvest = require("../js/views/changeInvestView");
-    let noiseview = require("../js/views/noiseview");
     let reportview = require("../js/views/reportview");
     let computeEngine = require("../js/computeEngine");
+    let factory = require("../js/componentFactory");
+    factory = new factory();
     let engine = 0;
     let view;
     let savings = 0;
@@ -61,34 +58,36 @@ class App
     switch(e.target.name)
     {
         case "spend":
-            view = new addview(this, this._m, "spend");
+        case "income":
+            view = factory.getComponent("addview", this, e);
             break;
         case "main":
             if (e.request)
                 this.mapToItems(e.request.data, e.request.type);
 
-            view = new mainview(this, this._items);
-            break;
-        case "income":
-            view = new addview(this, this._m, "income");
+            view = factory.getComponent("mainview", this, e);
             break;
         case "investment":
-            view = new investview(this, this._m);
+            view = factory.getComponent("investview", this, e);
             break;
         case "change":
-            view = new changeview(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
+            view = factory.getComponent("changeview", this, e);
             break;
         case "changeinvest":
-            view = new changeinvest(this, this._m, this._items[e.target.itemName][e.target.itemLocation]);
+            view = factory.getComponent("changeinvestview", this, e);
             break;
         case "noise":
-            view = new noiseview(this, this._m, this._items["income"], e.mainsize, this._noise);
+            view = factory.getComponent("noiseview", this, e);
             break;
         case "report":
             savings = document.getElementsByTagName("input")[0].value;
             range = document.getElementsByTagName("select")[0].value;
             engine = new computeEngine(range, savings, this._items, this._noise);
             view = new reportview(this, this._m, engine);
+
+            if (!engine.Valid)
+                alert(engine._error);
+
             break;
         default:
             return;

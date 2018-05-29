@@ -1,5 +1,7 @@
 "use strict";
-
+/**
+ * Class responsible for computation at input data
+ */
 class ComputeEngine
 {
    /**
@@ -21,7 +23,7 @@ class ComputeEngine
        }
        this._range = range;
 
-       if (!data)
+       if (!data.income.length)
        {
          this._valid = false;
          this._error = "No items provided!";
@@ -44,8 +46,8 @@ class ComputeEngine
        this._integrated_investments = [];
        this._integrated_wealth = {};
        this._integrated_wealth.data = [];
-       this._integrated_wealth.min;
-       this._integrated_wealth.max;
+       this._integrated_wealth.min = 0;
+       this._integrated_wealth.max = 0;
        this._valid = true;
 
        let len = this._data.investment.length;

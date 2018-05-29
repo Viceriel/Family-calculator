@@ -8,7 +8,7 @@
     "prebuild": "npm test && npm run quality && mkdirp build\\css build\\images && copy src\\app.html build",
     "build": "webpack && lessc src/less/custom.less build/css/custom.css",
     "postbuild": "webpack-dev-server",
-    "lint": "eslint ./src/js/*js ./src/js/views/*js",
+    "lint": "eslint -f html -o lintout.html ./src/js/*js ./src/js/views/*js",
     "report": "es6-plato -r -d report src/js",
     "quality": "npm run lint && npm run report"
   },

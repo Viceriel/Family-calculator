@@ -18,17 +18,17 @@ class Main
         this._parent = parent;
         this._valid = true;
         this._spents = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Spends"),
-                                                                               m("button[name=spend]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)},"Add spend")]);
+                                                                               m("button[name=spend]", {class: "btn btn-outline-success btn-custom-green", onclick: this.saveSavings.bind(this)},"Add spend")]);
         this._income = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Income"),
-                                                                               m("button[name=income]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)}, "Add income")]);
+                                                                               m("button[name=income]", {class: "btn btn-outline-success btn-custom-green", onclick: this.saveSavings.bind(this)}, "Add income")]);
         this._investment = m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-12"}, [m("h2", "Investments"),
-                                                                                   m("button[name=investment]", {class: "btn btn-outline-success btn-custom-green", onclick: this._parent.changeView.bind(this._parent)}, "Add investment")]);
+                                                                                   m("button[name=investment]", {class: "btn btn-outline-success btn-custom-green", onclick: this.saveSavings.bind(this)}, "Add investment")]);
         this._noise = m("div", {class: "row text-right lead"}, m("div", {class: "col-11"}, m("label", ["Noise:",
                                                                                                        m("span[id=noise]", {class: "fa fa-cog", onclick: this.noiseProcess.bind(this)})])));
         this._final = m("div", {class: "row text-right"}, m("div", {class: "col-11"}, [m("select", [m("option", "1"),
                                                                                                                  m("option", "2"),
                                                                                                                  m("option", "3")]),
-                                                                                       m("button[name=report]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this._parent.changeView.bind(this._parent)}, "Compute")]));
+                                                                                       m("button[name=report]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this.saveSavings.bind(this)}, "Compute")]));
 
         if (request && request.length != 0)
         {
@@ -88,8 +88,21 @@ class Main
               if (e.target.itemName == "investment")
                   e.target.name += "invest";
 
+              let save = document.getElementsByTagName("input")[0].value;
+              if (!isNaN(save))
+                  this._parent._savings = save;
+
               this._parent.changeView(e);
         }
+      }
+
+      saveSavings(e)
+      {
+        let save = document.getElementsByTagName("input")[0].value;
+        if (!isNaN(save))
+            this._parent._savings = save;
+
+        this._parent.changeView(e);
       }
 
       /**
@@ -102,6 +115,10 @@ class Main
           e.target.name = e.target.id;
           let main = document.getElementsByTagName("main")[0];
           e.mainsize = main.offsetWidth;
+          let save = document.getElementsByTagName("input")[0].value;
+          if (!isNaN(save))
+              this._parent._savings = save;
+
           this._parent.changeView(e);
       }
 
@@ -114,7 +131,7 @@ class Main
       {
           let main = [m("main", {class: "container begin"}, [m("h1[id=title]", {class: "text-center"}, "Family calculator"),
                                                       m("div", {class: "col-12 text-center"}, [m("h4[id=savings]", "Savings:"),
-                                                                                               m("input[type=text]")]),
+                                                                                               m("input[type=text][value="+this._parent._savings+"]")]),
                                                       m("div", {class: "row text-center"}, [this._income,
                                                                                             this._spents,
                                                                                             this._investment]),

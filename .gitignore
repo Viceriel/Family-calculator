@@ -4,3 +4,4 @@
 **/report
 **/.nyc_output
 **/coverage
+lintout.html
