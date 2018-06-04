@@ -10,8 +10,8 @@ class App
    */
   constructor()
   {
-    let mainview = require("../js/views/view.js");
-    let Noise = require("../js/noise.js");
+    let mainview = require("../js/views/view");
+    let Noise = require("../js/noise");
 
     this._m = require("mithril");
     this._main = new mainview(this);
@@ -21,11 +21,19 @@ class App
     this._items["income"] = [];
     this._items["investment"] = [];
     this._savings = 0;
+    this._footer =  this._m("footer", {class: "container-fluid text-center"}, [this._m("h3","Nič sa nezdá byť drahé na úver"),
+                                                                               this._m("div", {class: "col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 lead text-left"}, "Project serves for family financial planning. In case of problems, please contact me at viceriel@gmail.com.")]);
 
     this._map = new Map();
     this._map.set("Income", "income");
     this._map.set("Spends", "spend");
     this._map.set("Investments", "investment");
+    this._map.set("spend", "addview");
+    this._map.set("income", "addview");
+    this._map.set("investment", "investview");
+    this._map.set("change", "changeview");
+    this._map.set("changeinvest", "changeinvestview");
+    this._map.set("noise", "noiseview");
   }
 
   /**
@@ -57,27 +65,11 @@ class App
 
     switch(e.target.name)
     {
-        case "spend":
-        case "income":
-            view = factory.getComponent("addview", this, e);
-            break;
         case "main":
             if (e.request)
                 this.mapToItems(e.request.data, e.request.type);
 
             view = factory.getComponent("mainview", this, e);
-            break;
-        case "investment":
-            view = factory.getComponent("investview", this, e);
-            break;
-        case "change":
-            view = factory.getComponent("changeview", this, e);
-            break;
-        case "changeinvest":
-            view = factory.getComponent("changeinvestview", this, e);
-            break;
-        case "noise":
-            view = factory.getComponent("noiseview", this, e);
             break;
         case "report":
             savings = document.getElementsByTagName("input")[0].value;
@@ -90,7 +82,8 @@ class App
 
             break;
         default:
-            return;
+            view = factory.getComponent(this._map.get(e.target.name), this, e);
+            break;
     }
 
     if (view.Valid)
