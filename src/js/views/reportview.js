@@ -49,10 +49,10 @@ class ReportView
           const LEN = dataset.data.length;
 
           let x = d3.scaleLinear()
-                     .range([40, WIDTH - 25])
+                     .range([50, WIDTH - 25])
                      .domain([0, LEN-1]);
           let y = d3.scaleLinear()
-                    .range([HEIGHT - 20, 20])
+                    .range([HEIGHT - 40, 20])
                     .domain([dataset.min, dataset.max]);
 
           d3.select("main")
@@ -70,13 +70,13 @@ class ReportView
                  .attr("class", "line1")
                  .attr("d", line);
 
-          let pos = HEIGHT - 20;
+          let pos = HEIGHT - 40;
           svg.append("g")
                 .attr("transform", "translate(0," + pos + ")")
                 .call(d3.axisBottom(x));
 
           svg.append("g")
-             .attr("transform", "translate(40, 0)")
+             .attr("transform", "translate(50, 0)")
              .call(d3.axisLeft(y));
 
              function make_x_gridlines()
@@ -101,6 +101,40 @@ class ReportView
                   .attr("class", "grid")
                   .call(make_y_gridlines()
                         .tickSize(-WIDTH));
+
+              svg.append("text")
+                   .attr("transform", "rotate(-90)")
+                   .attr("y", "15")
+                   .attr("x", -(HEIGHT/2))
+                   .text("Wealth[-]");
+
+              svg.append("text")
+                     .attr("x", (WIDTH-75)/2)
+                     .attr("y", (HEIGHT-10))
+                     .text("Months");
+
+              svg.selectAll("circle")
+                   .data(dataset.data)
+                   .enter().append("circle")
+                   .attr("r", "3.5")
+                   .attr("cx", (d, i)=>{return x(i);})
+                   .attr("cy", (d)=>{return y(d);});
+
+              svg = d3.select("main")
+                       .append("svg")
+                       .attr("width", WIDTH)
+                       .attr("height", HEIGHT);
+
+             let dat = this._compute_engine.IntegratedIncomes;
+             let datas = [dataset.data, dat];
+
+             let gs = svg.selectAll("path")
+                .data(datas).enter()
+                .append("g");
+
+            gs.append("path")
+            .attr("class", "line1")
+            .attr("d", line);
       }, 500);
     }
 

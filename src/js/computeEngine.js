@@ -49,6 +49,8 @@ class ComputeEngine
        this._integrated_wealth.min = 0;
        this._integrated_wealth.max = 0;
        this._valid = true;
+       this._max;
+       this._min;
 
        let len = this._data.investment.length;
        for (let i = 0; i < len; i++)

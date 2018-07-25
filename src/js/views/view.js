@@ -25,9 +25,9 @@ class Main
                                                                                    m("button[name=investment]", {class: "btn btn-outline-success btn-custom-green", onclick: this.saveSavings.bind(this)}, "Add investment")]);
         this._noise = m("div", {class: "row text-right lead"}, m("div", {class: "col-11"}, m("label", ["Noise:",
                                                                                                        m("span[id=noise]", {class: "fa fa-cog", onclick: this.noiseProcess.bind(this)})])));
-        this._final = m("div", {class: "row text-right"}, m("div", {class: "col-11"}, [m("select", [m("option", "1"),
+        this._final = m("div", {class: "row text-right"}, m("div", {class: "col-11"}, [m("label",["Years:", m("select", [m("option", "1"),
                                                                                                                  m("option", "2"),
-                                                                                                                 m("option", "3")]),
+                                                                                                                 m("option", "3")])]),
                                                                                        m("button[name=report]", {class: "btn btn-outline-success btn-custom-yellow", onclick: this.saveSavings.bind(this)}, "Compute")]));
 
         if (request && request.length != 0)
