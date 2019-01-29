@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - "iojs"
   - "8"
+  - "node"
   install:
   - npm install
   - npm install --only=dev
