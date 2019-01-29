@@ -132,9 +132,13 @@ class ReportView
                 .data(datas).enter()
                 .append("g");
 
+          let color = d3.scaleOrdinal()
+                  .range(["#FF0000", "#009933" , "#0000FF"]);
+
             gs.append("path")
             .attr("class", "line1")
-            .attr("d", line);
+            .attr("d", line)
+            .style("stroke", function(d) { return color(d);});
       }, 500);
     }
 
